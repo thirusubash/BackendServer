@@ -1,0 +1,52 @@
+{
+    "properties": [
+        {
+            "name": "spring.initialize.default.role",
+            "type": "java.lang.String",
+            "description": "The default role for initialization",
+            "defaultValue": "default"
+        },
+        {
+            "name": "spring.initialize.default.group",
+            "type": "java.lang.String",
+            "description": "The default group for initialization",
+            "defaultValue": "Administrator"
+        },
+        {
+            "name": "spring.initialize.default.user",
+            "type": "java.lang.String",
+            "description": "The default username for initialization",
+            "defaultValue": "admin"
+        },
+        {
+            "name": "spring.initialize.default.password",
+            "type": "java.lang.String",
+            "description": "The default password for initialization",
+            "defaultValue": "Pa$$w0rd"
+        },
+        {
+            "name": "spring.initialize.default.firstname",
+            "type": "java.lang.String",
+            "description": "The default first name for initialization",
+            "defaultValue": "Administrator"
+        },
+        {
+            "name": "spring.initialize.default.lastname",
+            "type": "java.lang.String",
+            "description": "The default last name for initialization",
+            "defaultValue": ""
+        },
+        {
+            "name": "spring.initialize.default.email",
+            "type": "java.lang.String",
+            "description": "The default email for initialization",
+            "defaultValue": "admin@gksvp.com"
+        },
+        {
+            "name": "spring.initialize.default.active",
+            "type": "java.lang.Boolean",
+            "description": "The default active status for initialization",
+            "defaultValue": true
+        }
+    ]
+}
