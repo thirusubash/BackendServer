@@ -1,4 +1,4 @@
-package com.gksvp.web.controller;
+package com.gksvp.web.controller.user;
 
 import com.gksvp.web.model.user.User;
 import com.gksvp.web.service.user.UserService;
