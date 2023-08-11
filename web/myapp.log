@@ -35,3 +35,47 @@
 2023-08-11T09:12:28.042+05:30  INFO 20868 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
 2023-08-11T09:12:28.047+05:30  INFO 20868 --- [restartedMain] com.gksvp.web.WebApplication             : Started WebApplication in 2.079 seconds (process running for 1622.606)
 2023-08-11T09:12:28.048+05:30  INFO 20868 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2023-08-11T10:09:52.037+05:30  INFO 14492 --- [restartedMain] com.gksvp.web.WebApplication             : Starting WebApplication using Java 17.0.7 with PID 14492 (C:\Users\thiru\OneDrive\Documents\GKSVP\Server\Server\web\target\classes started by thiru in C:\Users\thiru\OneDrive\Documents\GKSVP\Server\Server\web)
+2023-08-11T10:09:52.042+05:30 DEBUG 14492 --- [restartedMain] com.gksvp.web.WebApplication             : Running with Spring Boot v3.1.2, Spring v6.0.11
+2023-08-11T10:09:52.044+05:30  INFO 14492 --- [restartedMain] com.gksvp.web.WebApplication             : No active profile set, falling back to 1 default profile: "default"
+2023-08-11T10:09:52.215+05:30  INFO 14492 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-08-11T10:09:52.216+05:30  INFO 14492 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-08-11T10:09:54.306+05:30  INFO 14492 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-08-11T10:09:54.475+05:30  INFO 14492 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 148 ms. Found 3 JPA repository interfaces.
+2023-08-11T10:09:56.324+05:30  INFO 14492 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-08-11T10:09:56.347+05:30  INFO 14492 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-08-11T10:09:56.351+05:30  INFO 14492 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.11]
+2023-08-11T10:09:56.515+05:30  INFO 14492 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-08-11T10:09:56.516+05:30  INFO 14492 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4299 ms
+2023-08-11T10:09:57.116+05:30  INFO 14492 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-08-11T10:09:57.245+05:30  INFO 14492 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.6.Final
+2023-08-11T10:09:57.253+05:30  INFO 14492 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-08-11T10:09:57.571+05:30  INFO 14492 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-08-11T10:09:57.886+05:30  INFO 14492 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-08-11T10:09:57.940+05:30  INFO 14492 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-08-11T10:09:58.530+05:30  INFO 14492 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@69a179cd
+2023-08-11T10:09:58.538+05:30  INFO 14492 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-08-11T10:09:59.429+05:30  INFO 14492 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-08-11T10:10:00.949+05:30  INFO 14492 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-08-11T10:10:01.334+05:30  INFO 14492 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-08-11T10:10:01.965+05:30  INFO 14492 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-08-11T10:10:04.371+05:30 DEBUG 14492 --- [restartedMain] c.gksvp.web.Security.JwtRequestFilter    : Filter 'jwtRequestFilter' configured for use
+2023-08-11T10:10:04.573+05:30  WARN 14492 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-08-11T10:10:04.810+05:30  INFO 14492 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@64b6359a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3b52b2a7, org.springframework.security.web.context.SecurityContextHolderFilter@6ba1d92, org.springframework.security.web.header.HeaderWriterFilter@500028ba, org.springframework.security.web.csrf.CsrfFilter@5ea25272, org.springframework.security.web.authentication.logout.LogoutFilter@2e5c7eb8, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@47b681b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4b1e19fb, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5964589e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@62ae9986, org.springframework.security.web.access.ExceptionTranslationFilter@7a70d97a, org.springframework.security.web.access.intercept.AuthorizationFilter@315db12]
+2023-08-11T10:10:05.502+05:30  INFO 14492 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-08-11T10:10:05.547+05:30  WARN 14492 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Mvc [pattern='/register']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-08-11T10:10:05.549+05:30  INFO 14492 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Mvc [pattern='/register']
+2023-08-11T10:10:05.553+05:30  WARN 14492 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Mvc [pattern='/authenticate']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-08-11T10:10:05.558+05:30  INFO 14492 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Mvc [pattern='/authenticate']
+2023-08-11T10:10:05.560+05:30  WARN 14492 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Mvc [pattern='/roles']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-08-11T10:10:05.566+05:30  INFO 14492 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Mvc [pattern='/roles']
+2023-08-11T10:10:05.575+05:30  WARN 14492 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Mvc [pattern='/groups']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-08-11T10:10:05.578+05:30  INFO 14492 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Mvc [pattern='/groups']
+2023-08-11T10:10:05.579+05:30  WARN 14492 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Mvc [pattern='/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-08-11T10:10:05.580+05:30  INFO 14492 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Mvc [pattern='/**']
+2023-08-11T10:10:06.729+05:30  INFO 14492 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-08-11T10:10:06.954+05:30  INFO 14492 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-08-11T10:10:07.007+05:30  INFO 14492 --- [RMI TCP Connection(1)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-08-11T10:10:07.007+05:30  INFO 14492 --- [restartedMain] com.gksvp.web.WebApplication             : Started WebApplication in 15.695 seconds (process running for 16.658)
+2023-08-11T10:10:07.010+05:30  INFO 14492 --- [RMI TCP Connection(1)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-08-11T10:10:07.014+05:30  INFO 14492 --- [RMI TCP Connection(1)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
