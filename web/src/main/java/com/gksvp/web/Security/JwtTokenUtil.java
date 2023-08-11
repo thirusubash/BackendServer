@@ -12,8 +12,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.gksvp.web.model.user.User;
-import com.gksvp.web.service.user.UserService;
+import com.gksvp.web.user.entity.User;
+import com.gksvp.web.user.service.UserService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -111,8 +111,6 @@ public class JwtTokenUtil implements Serializable {
 		claims.put("isActive", userDetails.isEnabled());
 		claims.put("email", user.getEmail());
 		claims.put(authorities, authorities);
-		claims.put("pan", user.getPAN());
-		System.out.println("claims info : " + claims);
 		return doGenerateToken(claims, userDetails.getUsername());
 	}
 

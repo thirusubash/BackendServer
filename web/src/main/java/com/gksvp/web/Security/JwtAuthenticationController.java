@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.gksvp.web.Security.model.JwtRequest;
 import com.gksvp.web.Security.model.JwtResponse;
-import com.gksvp.web.model.user.User;
-import com.gksvp.web.service.user.UserService;
+import com.gksvp.web.user.entity.User;
+import com.gksvp.web.user.service.UserService;
 
 @RestController
 @CrossOrigin

@@ -8,10 +8,9 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.gksvp.web.model.user.Role;
-import com.gksvp.web.model.user.User;
-
-import com.gksvp.web.service.user.UserService;
+import com.gksvp.web.user.entity.Role;
+import com.gksvp.web.user.entity.User;
+import com.gksvp.web.user.service.UserService;
 
 import java.util.List;
 import java.util.Set;
