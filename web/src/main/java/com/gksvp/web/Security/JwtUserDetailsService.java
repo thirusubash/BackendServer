@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -27,10 +28,17 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String userName) {
-        User user = userService.getUserByUserName(userName);
-        List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
-        return buildUserForAuthentication(user, authorities);
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        try {
+            User user = userService.getUserByUserName(userName);
+            List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
+            return buildUserForAuthentication(user, authorities);
+        } catch (UsernameNotFoundException ex) {
+            throw ex; // Re-throw the exception to propagate it
+        } catch (Exception e) {
+            // Handle other exceptions here if needed
+            throw new UsernameNotFoundException("User not found", e);
+        }
     }
 
     private List<GrantedAuthority> getUserAuthority(Set<Role> userRoles) {

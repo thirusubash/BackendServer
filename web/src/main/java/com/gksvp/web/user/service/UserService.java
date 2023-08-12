@@ -7,28 +7,38 @@ import com.gksvp.web.user.entity.User;
 
 public interface UserService {
 
-    List<User> getAllUsers();
+    List<User> getAllUsers() throws Exception;
 
-    User getUserById(Long id);
+    User getUserById(Long id) throws Exception;
 
-    User createUser(User user);
+    User createUser(User user) throws Exception;
 
-    User updateUser(Long id, User user);
+    User updateUser(Long id, User user) throws Exception;
 
-    boolean deleteUser(Long id);
+    boolean deleteUser(Long id) throws Exception;
 
-    User getUserByMobileNo(String mobileNo);
+    User getUserByMobileNo(String mobileNo) throws Exception;
 
-    User getUserByEmail(String email);
+    User getUserByEmail(String email) throws Exception;
 
-    User getUserByUserName(String username);
+    User getUserByUserName(String username) throws Exception;
 
-    User getUserByPAN(String PAN);
+    User getUserByPAN(String PAN) throws Exception;
 
-    User getUserByAdhaar(String adhaarNo);
+    User getUserByAdhaar(String adhaarNo) throws Exception;
 
-    User updateGroupAndRoles(Long userId, Set<Long> groupIds, Set<Long> roleIds);
+    User updateGroupAndRoles(Long userId, Set<Long> groupIds, Set<Long> roleIds) throws Exception;
 
-    User createUserWithGroupsAndRoles(User user);
+    User createUserWithGroupsAndRoles(User user) throws Exception;
+
+    Boolean updateNumber(Long userId, String mobileNo) throws Exception;
+
+    public Boolean updateEmail(Long userId, String email) throws Exception;
+
+    public boolean isEmailTaken(String email) throws Exception;
+
+    public boolean isMobileTaken(String mobile) throws Exception;
+
+    public boolean isUsernameTaken(String username) throws Exception;
 
 }

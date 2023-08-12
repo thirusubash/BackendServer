@@ -49,7 +49,7 @@ public class JwtTokenUtil implements Serializable {
 	// return null;
 	// }
 	// }
-	private final KeyPair nkeys = Keys.keyPairFor(SignatureAlgorithm.RS512);
+	private final KeyPair nkeys = Keys.keyPairFor(SignatureAlgorithm.PS512);
 
 	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
@@ -98,7 +98,7 @@ public class JwtTokenUtil implements Serializable {
 		return false;
 	}
 
-	public String generateToken(UserDetails userDetails) {
+	public String generateToken(UserDetails userDetails) throws Exception {
 		Map<String, Object> claims = new HashMap<>();
 		User user = userService.getUserByUserName(userDetails.getUsername());
 		final String authorities = userDetails.getAuthorities().stream()

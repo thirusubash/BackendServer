@@ -6,11 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gksvp.web.util.geo.GeoLocation;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,9 +34,10 @@ public class User {
     private String userName;
 
     @Column(name = "email", nullable = false, unique = true)
+    @Email
     private String email;
 
-    @Column(name = "country_code")
+    @Column(name = "country_code", nullable = false)
     private String countryCode;
 
     @Column(name = "mobile_no", unique = true, nullable = false)
@@ -43,7 +46,7 @@ public class User {
     @Column(name = "alternate_mobile_no")
     private String alternateMobileNo;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "first_name", nullable = false)
@@ -51,18 +54,8 @@ public class User {
 
     @Column(name = "last_name", nullable = false)
     private String lastName;
-
-    @Column(name = "pan", unique = true, nullable = false)
-    private String pan;
-
-    @Column(name = "adhaar", unique = true, nullable = false)
-    private String adhaar;
-
-    @Column(name = "gstin", unique = true, nullable = false)
-    private String gstin;
-
-    @Column(name = "pincode", nullable = false)
-    private Integer pincode;
+    @Column(name = "date_of_birth")
+    private LocalDate dateOfBirth;
 
     @Column(name = "active")
     private Boolean active;
@@ -78,6 +71,9 @@ public class User {
 
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
+
+    private Boolean mobileVerified;
+    private Boolean emailVerified;
 
     @JsonIgnoreProperties({ "users" })
     @ManyToMany(cascade = CascadeType.MERGE)
