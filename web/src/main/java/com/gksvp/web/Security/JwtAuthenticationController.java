@@ -19,7 +19,6 @@ import com.gksvp.web.util.AESEncryption;
 @RestController
 @CrossOrigin
 public class JwtAuthenticationController {
-
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
@@ -36,10 +35,7 @@ public class JwtAuthenticationController {
 
 	@PostMapping(value = "/authenticate")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-		System.out.print(authenticationRequest.getUsername() + "		" + authenticationRequest.getPassword() + "/n");
-
 		String username;
-
 		switch (getUsernameType(authenticationRequest.getUsername())) {
 			case MOBILE_NUMBER:
 				User mobileUser = userService.getUserByMobileNo(authenticationRequest.getUsername());
@@ -98,8 +94,8 @@ public class JwtAuthenticationController {
 			}
 
 			user.setActive(true);
-			userService.createUser(user);
-			return ResponseEntity.ok("User registered successfully");
+			user = userService.createUser(user);
+			return ResponseEntity.ok("User( " + user.getId() + " )registered successfully");
 		} catch (Exception e) {
 			// Return an appropriate error response
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

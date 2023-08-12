@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,43 +29,21 @@ public class JwtTokenUtil implements Serializable {
 	@Autowired
 	private UserService userService;
 
-	// private Key[] generateSafeToken() {
-	// try{
-	// KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-	// keyGen.initialize(4096);
-	// KeyPair pair = keyGen.generateKeyPair();
-	// byte[] encodedPrivateKey = pair.getPrivate().getEncoded();
-	// byte[] encodedPublicKey = pair.getPublic().getEncoded();
-	// System.out.println(Base64.getEncoder().encodeToString(encodedPrivateKey));
-	// System.out.println(Base64.getEncoder().encodeToString(encodedPublicKey));
+	private String audience = "https://gksvp.com"; // Set your audience here
 
-	// Key key = Keys.hmacShaKeyFor(encodedPrivateKey);
-	// Key key1=Keys.hmacShaKeyFor(encodedPublicKey);
-	// Key keys[]={key,key1};
-	// return keys;
-	// }catch(Exception e)
-	// {
-
-	// System.out.println("error"+e);
-	// return null;
-	// }
-	// }
-	private final KeyPair nkeys = Keys.keyPairFor(SignatureAlgorithm.PS512);
+	private final KeyPair nkeys = Keys.keyPairFor(SignatureAlgorithm.RS512);
 
 	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
 	public String getUsernameFromToken(String token) {
-		System.out.println("username from token   " + getClaimFromToken(token, Claims::getSubject));
 		return getClaimFromToken(token, Claims::getSubject);
 	}
 
 	public Date getIssuedAtDateFromToken(String token) {
-		System.out.println("Issue date" + getClaimFromToken(token, Claims::getIssuedAt));
 		return getClaimFromToken(token, Claims::getIssuedAt);
 	}
 
 	public Date getExpirationDateFromToken(String token) {
-		System.out.println("Expired date " + getClaimFromToken(token, Claims::getExpiration));
 		return getClaimFromToken(token, Claims::getExpiration);
 	}
 
@@ -76,14 +55,13 @@ public class JwtTokenUtil implements Serializable {
 	private Claims getAllClaimsFromToken(String token) {
 		Claims claims = null;
 		try {
-
 			claims = Jwts.parserBuilder()
 					.setSigningKey(nkeys.getPublic())
 					.build()
 					.parseClaimsJws(token).getBody();
-
 		} catch (Exception e) {
-			System.out.println("eror" + ": " + e.getMessage());
+			System.out.println("error: " + e.getMessage());
+			throw e;
 		}
 		return claims;
 	}
@@ -94,29 +72,34 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 	private Boolean ignoreTokenExpiration(String token) {
-		// here you specify tokens, for that the expiration is ignored
+		// here you specify tokens, for which the expiration is ignored
 		return false;
 	}
 
 	public String generateToken(UserDetails userDetails) throws Exception {
 		Map<String, Object> claims = new HashMap<>();
 		User user = userService.getUserByUserName(userDetails.getUsername());
+
 		final String authorities = userDetails.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority)
 				.collect(Collectors.joining(","));
-		// claims.put("scopes", roles.stream().map(role -> new
-		// SimpleGrantedAuthority(role.getName())).collect(Collectors.toList()));
+
 		claims.put("roles", authorities);
 		claims.put("iss", "www.gksvp.com");
 		claims.put("isActive", userDetails.isEnabled());
-		claims.put("email", user.getEmail());
-		claims.put(authorities, authorities);
+		claims.put("id", user.getId());
+
 		return doGenerateToken(claims, userDetails.getUsername());
 	}
 
 	private String doGenerateToken(Map<String, Object> claims, String subject) {
-
-		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+		return Jwts.builder()
+				.setHeaderParam("alg", "RS512") // Algorithm
+				.setHeaderParam("typ", "JWT") // Token Type
+				.setClaims(claims)
+				.setSubject(subject)
+				.setAudience(audience)
+				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
 				.signWith(nkeys.getPrivate()).compact();
 	}
@@ -127,7 +110,7 @@ public class JwtTokenUtil implements Serializable {
 
 	public Boolean validateToken(String token, UserDetails userDetails) {
 		final String username = getUsernameFromToken(token);
-		System.out.println("useranem from validate method" + username);
+		System.out.println("username from validate method" + username);
 		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
 	}
 }

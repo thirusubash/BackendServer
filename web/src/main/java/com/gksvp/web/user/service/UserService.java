@@ -3,13 +3,14 @@ package com.gksvp.web.user.service;
 import java.util.List;
 import java.util.Set;
 
+import com.gksvp.web.user.dto.UserDTO;
 import com.gksvp.web.user.entity.User;
 
 public interface UserService {
 
-    List<User> getAllUsers() throws Exception;
+    List<UserDTO> getAllUsers() throws Exception;
 
-    User getUserById(Long id) throws Exception;
+    UserDTO getUserById(Long id) throws Exception;
 
     User createUser(User user) throws Exception;
 

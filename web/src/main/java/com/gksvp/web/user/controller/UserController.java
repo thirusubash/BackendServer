@@ -1,7 +1,9 @@
 package com.gksvp.web.user.controller;
 
+import com.gksvp.web.user.dto.UserDTO;
 import com.gksvp.web.user.entity.User;
 import com.gksvp.web.user.service.UserService;
+import com.gksvp.web.util.AESEncryption;
 import com.gksvp.web.util.otp.OtpService;
 import com.twilio.rest.api.v2010.account.Message;
 
@@ -16,21 +18,23 @@ public class UserController {
 
     private final UserService userService;
     private final OtpService otpService;
+    private final AESEncryption aesEncryption;
 
-    public UserController(UserService userService, OtpService otpService) {
+    public UserController(UserService userService, OtpService otpService, AESEncryption aesEncryption) {
         this.userService = userService;
         this.otpService = otpService;
+        this.aesEncryption = aesEncryption;
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() throws Exception {
-        List<User> users = userService.getAllUsers();
+    public ResponseEntity<List<UserDTO>> getAllUsers() throws Exception {
+        List<UserDTO> users = userService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) throws Exception {
-        User user = userService.getUserById(id);
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) throws Exception {
+        UserDTO user = userService.getUserById(id);
         if (user != null) {
             return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
@@ -39,37 +43,30 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) throws Exception {
-        User createdUser = userService.createUser(user);
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
+        try {
+            String encryptedEmail = aesEncryption.encrypt(user.getEmail());
+            String encryptedMobileNo = aesEncryption.encrypt(user.getMobileNo());
+            String encryptedUserName = aesEncryption.encrypt(user.getUserName());
+
+            if (userService.isEmailTaken(encryptedEmail)) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email is already taken");
+            }
+            if (userService.isMobileTaken(encryptedMobileNo)) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mobile number is already taken");
+            }
+            if (userService.isUsernameTaken(encryptedUserName)) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username is already taken");
+            }
+            user.setActive(true);
+            user = userService.createUser(user);
+            return ResponseEntity.ok("User( " + user.getId() + " )registered successfully");
+        } catch (Exception e) {
+            // Return an appropriate error response
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while registering user");
+        }
     }
-
-    @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody User user) throws Exception {
-        if (userService.isEmailTaken(user.getEmail())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email is already taken");
-        }
-        if (userService.isMobileTaken(user.getMobileNo())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mobile number is already taken");
-        }
-        if (userService.isUsernameTaken(user.getUserName())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username is already taken");
-        }
-        user.setActive(true);
-        User newuser = userService.createUser(user);
-        if (newuser == null) {
-            ResponseEntity.ok("Error  registering you info ");
-        }
-
-        return ResponseEntity.ok("User registered successfully");
-    }
-
-    // @PostMapping
-    // public ResponseEntity<User> createUserWithGroupsAndRoles(@RequestBody User
-    // user) {
-    // User createdUser = userService.createUserWithGroupsAndRoles(user);
-    // return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
-    // }
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) throws Exception {

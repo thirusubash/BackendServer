@@ -1,5 +1,6 @@
 package com.gksvp.web.user.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -7,12 +8,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.management.relation.RoleNotFoundException;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.gksvp.web.exception.GroupNotFoundException;
+import com.gksvp.web.user.dto.KYCInfoDTO;
+import com.gksvp.web.user.dto.UserDTO;
 import com.gksvp.web.user.entity.Group;
 import com.gksvp.web.user.entity.Role;
 import com.gksvp.web.user.entity.User;
+import com.gksvp.web.user.entity.UserKYCInfo;
 import com.gksvp.web.user.repository.GroupRepository;
 import com.gksvp.web.user.repository.RoleRepository;
 import com.gksvp.web.user.repository.UserRepository;
@@ -36,28 +43,82 @@ public class UserServiceImpl implements UserService {
         this.aesEncryption = aesEncryption;
     }
 
-    @Override
-    public List<User> getAllUsers() throws Exception {
-        List<User> users = userRepository.findAll();
-        try {
-            for (User user : users) {
-                user.setUserName(aesEncryption.decrypt(user.getUserName()));
-                user.setMobileNo(aesEncryption.decrypt(user.getMobileNo()));
-                user.setEmail(aesEncryption.decrypt(user.getEmail()));
-                user.setPassword("************");
-            }
+    // helper mthid for encrpt decypt
+    private String encrypt(String plainText) throws Exception {
+        return (plainText != null) ? aesEncryption.encrypt(plainText) : null;
+    }
 
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+    private String decrypt(String cipherText) throws Exception {
+        if (cipherText != null) {
+            return aesEncryption.decrypt(cipherText);
+        } else {
+            throw new IllegalArgumentException("Invalid ciphertext length");
         }
-        return users;
+    }
+
+    // helper method to encrpt the userinformation
+    private User encryptUser(User user) throws Exception {
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setUserName(encrypt(user.getUserName()));
+        user.setPassword(encodedPassword);
+        user.setEmail(encrypt(user.getEmail()));
+        user.setMobileNo(encrypt(user.getMobileNo()));
+        user.setAlternateMobileNo(encrypt(user.getAlternateMobileNo()));
+        return user;
+    }
+
+    private UserDTO mapUserToDTO(User user) throws Exception {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+        userDTO.setId(user.getId().toString());
+        userDTO.setUserName(decrypt(user.getUserName()));
+        userDTO.setMobileNo(decrypt(user.getMobileNo()));
+        userDTO.setEmail(decrypt(user.getEmail()));
+        userDTO.setActive(user.getActive());
+        userDTO.setAddress(user.getAddress());
+
+        // Map KYC information from UserKYCInfo to KYCInfoDTO
+        UserKYCInfo kycInfo = user.getKycInfo();
+        if (kycInfo != null) {
+            KYCInfoDTO kycInfoDTO = new KYCInfoDTO();
+            kycInfoDTO.setDocumentType(kycInfo.getDocumentType());
+            kycInfoDTO.setDocumentNumber(kycInfo.getDocumentNumber());
+            kycInfoDTO.setIssueDate(kycInfo.getIssueDate());
+            kycInfoDTO.setExpiryDate(kycInfo.getExpiryDate());
+            kycInfoDTO.setIssueAuthority(kycInfo.getIssueAuthority());
+            // Set other KYC attributes
+
+            userDTO.setKycInfoDto(kycInfoDTO);
+        }
+        return userDTO;
     }
 
     @Override
-    public User getUserById(Long id) {
+    public List<UserDTO> getAllUsers() throws Exception {
+        List<User> users = userRepository.findAll();
+        List<UserDTO> userDTOs = new ArrayList<>();
+
+        try {
+            for (User user : users) {
+                userDTOs.add(mapUserToDTO(user));
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return userDTOs;
+    }
+
+    @Override
+    public UserDTO getUserById(Long id) throws Exception {
         Optional<User> optionalUser = userRepository.findById(id);
-        return optionalUser.orElse(null);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            UserDTO userDTO = mapUserToDTO(user);
+            return userDTO;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -86,41 +147,44 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(User user) throws Exception {
+    public User createUser(User user) throws RoleNotFoundException, GroupNotFoundException, Exception {
+        user = encryptUser(user);
 
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setUserName(aesEncryption.encrypt(user.getUserName()));
-        user.setPassword(encodedPassword);
-        user.setEmail(aesEncryption.encrypt(user.getEmail()));
-        user.setMobileNo(aesEncryption.encrypt(user.getMobileNo()));
-        // set default role for new users
+        // Set default role for new users
         Role defaultRole = roleRepository.findByName("user");
+        if (defaultRole == null) {
+            throw new RoleNotFoundException("Default role 'user' not found");
+        }
         user.setRoles(new HashSet<>(Collections.singletonList(defaultRole)));
 
-        // set default group for new users
-        Group defaultgroup = groupRepository.findByName("user");
-        user.setGroups(new HashSet<>(Collections.singletonList(defaultgroup)));
+        // Set default group for new users
+        Group defaultGroup = groupRepository.findByName("user");
+        if (defaultGroup == null) {
+            throw new GroupNotFoundException("Default group 'user' not found");
+        }
+        user.setGroups(new HashSet<>(Collections.singletonList(defaultGroup)));
+
         user.setActive(true);
-        return userRepository.save(user);
+        user = userRepository.save(user);
+        user.setPassword("***************");
+
+        return user;
     }
 
     @Override
-    public User updateUser(Long id, User user) {
+    public User updateUser(Long id, User user) throws Exception {
+        user = encryptUser(user);
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User existingUser = optionalUser.get();
-            existingUser.setUserName(user.getUserName());
             existingUser.setEmail(user.getEmail());
-            existingUser.setCountryCode(user.getCountryCode());
             existingUser.setMobileNo(user.getMobileNo());
-            existingUser.setPassword(user.getPassword());
+            existingUser.setAlternateMobileNo(user.getAlternateMobileNo());
+            existingUser.setCountryCode(user.getCountryCode());
             existingUser.setFirstName(user.getFirstName());
             existingUser.setLastName(user.getLastName());
             existingUser.setActive(user.getActive());
             existingUser.setLocation(user.getLocation());
-
-            // Update other fields as needed
-
             return userRepository.save(existingUser);
         } else {
             return null;
@@ -139,19 +203,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateGroupAndRoles(Long userId, Set<Long> groupIds, Set<Long> roleIds) {
+    public User updateGroupAndRoles(Long userId, Set<Long> groupIds, Set<Long> roleIds) throws Exception {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-
             // Update groups
             Set<Group> groups = new HashSet<>(groupRepository.findAllById(groupIds));
             user.setGroups(groups);
-
             // Update roles
             Set<Role> roles = new HashSet<>(roleRepository.findAllById(roleIds));
             user.setRoles(roles);
-
             return userRepository.save(user);
         } else {
             throw new IllegalArgumentException("User not found with ID: " + userId);
@@ -159,10 +220,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUserWithGroupsAndRoles(User user) {
+    public User createUserWithGroupsAndRoles(User user) throws Exception {
         // Encode the user's password before saving
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+        user = encryptUser(user);
 
         // Create sets to hold selected groups and roles
         Set<Group> selectedGroups = new LinkedHashSet<>();
@@ -212,24 +272,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean updateNumber(Long userId, String mobileNo) throws Exception {
-        User user = getUserById(userId);
-        user.setMobileNo(mobileNo);
-        User updateuser = userRepository.save(user);
-        if (updateuser.getMobileNo() == mobileNo) {
-            return true;
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setMobileNo(encrypt(mobileNo));
+            User updatedUser = userRepository.save(user);
+            return updatedUser.getMobileNo().equals(encrypt(mobileNo));
         } else {
+            // Handle the case when the user with the given ID is not found
             return false;
         }
     }
 
     @Override
     public Boolean updateEmail(Long userId, String email) throws Exception {
-        User user = getUserById(userId);
-        user.setEmail(email);
-        User updateuser = userRepository.save(user);
-        if (updateuser.getEmail() == email) {
-            return true;
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setEmail(encrypt(email));
+            User updatedUser = userRepository.save(user);
+            return updatedUser.getEmail().equals(encrypt(email));
         } else {
+            // Handle the case when the user with the given ID is not found
             return false;
         }
     }

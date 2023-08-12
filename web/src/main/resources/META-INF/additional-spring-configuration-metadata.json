@@ -72,6 +72,15 @@
             "name": "twilio.phone-number",
             "type": "java.lang.String",
             "description": "A description for 'twilio.phone-number'"
+        },
+        {
+            "name": "jwt.privateKeyPath",
+            "type": "java.lang.String",
+            "description": "A description for 'jwt.privateKeyPath'"
         }
     ]
+}   "type": "java.lang.String",
+"description": "A description for 'jwt.publicKeyPath'"
+}
+]
 }
