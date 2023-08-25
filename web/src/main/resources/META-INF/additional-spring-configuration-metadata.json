@@ -77,10 +77,41 @@
             "name": "jwt.privateKeyPath",
             "type": "java.lang.String",
             "description": "A description for 'jwt.privateKeyPath'"
+        },
+        {
+            "name": "spring.datasource.blob-image.password",
+            "type": "java.lang.String",
+            "description": "A description for 'spring.datasource.blob-image.password'"
+        },
+        {
+            "name": "spring.datasource.blob-image.url",
+            "type": "java.lang.String",
+            "description": "A description for 'spring.datasource.blob-image.url'"
+        },
+        {
+            "name": "spring.datasource.blob-image.username",
+            "type": "java.lang.String",
+            "description": "A description for 'spring.datasource.blob-image.username'"
+        },
+        {
+            "name": "file.upload-dir",
+            "type": "java.lang.String",
+            "description": "A description for 'file.upload-dir'"
+        },
+        {
+            "name": "thumbnail.height",
+            "type": "java.lang.String",
+            "description": "A description for 'thumbnail.height'"
+        },
+        {
+            "name": "thumbnail.width",
+            "type": "java.lang.String",
+            "description": "A description for 'thumbnail.width'"
+        },
+        {
+            "name": "thumbnail.outputExtension",
+            "type": "java.lang.String",
+            "description": "A description for 'thumbnail.outputExtension'"
         }
     ]
-}   "type": "java.lang.String",
-"description": "A description for 'jwt.publicKeyPath'"
-}
-]
 }

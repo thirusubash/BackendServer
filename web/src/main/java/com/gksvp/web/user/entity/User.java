@@ -74,6 +74,7 @@ public class User {
 
     private Boolean mobileVerified;
     private Boolean emailVerified;
+    private String url;
 
     @JsonIgnoreProperties({ "users" })
     @ManyToMany(cascade = CascadeType.MERGE)

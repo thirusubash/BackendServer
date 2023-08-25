@@ -22,5 +22,6 @@ public class UserDTO {
     private Boolean active;
     private GeoLocation location;
     private KYCInfoDTO kycInfoDto;
+    private String url;
 
 }

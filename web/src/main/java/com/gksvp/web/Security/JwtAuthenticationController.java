@@ -34,6 +34,7 @@ public class JwtAuthenticationController {
 	private AESEncryption aesEncryption;
 
 	@PostMapping(value = "/authenticate")
+	@CrossOrigin(origins = "https://localhost:8080", allowCredentials = "true")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 		String username;
 		switch (getUsernameType(authenticationRequest.getUsername())) {
@@ -77,6 +78,7 @@ public class JwtAuthenticationController {
 	}
 
 	@PostMapping("/register")
+	@CrossOrigin(origins = "https://localhost:8080", allowCredentials = "true")
 	public ResponseEntity<?> registerUser(@RequestBody User user) {
 		try {
 			String encryptedEmail = aesEncryption.encrypt(user.getEmail());
