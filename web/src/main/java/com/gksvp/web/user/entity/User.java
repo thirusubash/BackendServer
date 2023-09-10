@@ -1,13 +1,9 @@
 package com.gksvp.web.user.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.gksvp.web.util.geo.GeoLocation;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -15,14 +11,16 @@ import jakarta.validation.constraints.Email;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+@Entity
+@Table(name = "users")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "users")
+@ToString(exclude = {"addresses", "kycInfoList", "locations", "roles", "groups"}) // Exclude the relationships from toString()
 public class User {
 
     @Id
@@ -30,41 +28,31 @@ public class User {
     @Column(name = "user_id", nullable = false, unique = true)
     private Long id;
 
-    @Column(name = "user_name", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String userName;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     @Email
     private String email;
 
-    @Column(name = "country_code", nullable = false)
+    @Column(nullable = false)
     private String countryCode;
 
-    @Column(name = "mobile_no", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String mobileNo;
 
-    @Column(name = "alternate_mobile_no")
+    @Column()
     private String alternateMobileNo;
 
-    @Column(name = "password", nullable = false)
+    @Column(nullable = false)
     private String password;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(nullable = false)
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    @Column(nullable = false)
     private String lastName;
-    @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
-
-    @Column(name = "active")
-    private Boolean active;
-
-    @Embedded
-    private Address address;
-
-    @Embedded
-    private GeoLocation location;
 
     @CreationTimestamp
     private LocalDateTime createDateTime;
@@ -72,56 +60,35 @@ public class User {
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
 
-    private Boolean mobileVerified;
-    private Boolean emailVerified;
+    @Builder.Default
+    private Boolean mobileVerified = false;
+    @Builder.Default
+    private Boolean emailVerified = false;
+    @Builder.Default
+    private Boolean active = true;
+
     private String url;
 
-    @JsonIgnoreProperties({ "users" })
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({"user"})
+    private List<Address> addresses;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("user")
+    private List<UserKYCInfo> kycInfoList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("user")
+    private List<GeoLocation> locations;
+
+    @JsonIgnoreProperties("users")
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    @JsonIgnoreProperties({ "users" })
-    @ManyToMany(cascade = CascadeType.ALL)
+
+    @JsonIgnoreProperties("users")
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "user_groups", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
     private Set<Group> groups;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "kyc_info_id", referencedColumnName = "kyc_info_id")
-    private UserKYCInfo kycInfo;
-
-    public void addRole(Role role) {
-        if (roles == null) {
-            roles = new HashSet<>();
-        }
-        roles.add(role);
-    }
-
-    public void removeRole(Role role) {
-        if (roles != null) {
-            roles.remove(role);
-        }
-    }
-
-    public void addGroup(Group group) {
-        if (groups == null) {
-            groups = new HashSet<>();
-        }
-        groups.add(group);
-    }
-
-    public void removeGroup(Group group) {
-        if (groups != null) {
-            groups.remove(group);
-        }
-    }
-
-    public GeoLocation getLocation() {
-        return location;
-    }
-
-    public void setLocation(GeoLocation location) {
-        this.location = location;
-    }
-
 }

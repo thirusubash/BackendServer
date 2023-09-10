@@ -1,30 +1,38 @@
 package com.gksvp.web.user.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
-import jakarta.persistence.Embeddable;
+import jakarta.persistence.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Embeddable
+@Entity
+@Builder
 public class Address {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String streetAddress;
     private String city;
     private String state;
     private String postalCode;
     private String country;
+    private String region;
+    private String district;
+    private String suburb;
+    private String zipCode;
+    private Boolean active = false;
 
-    // Additional fields for customization
-    private String region; // For regions or provinces
-    private String district; // For districts or localities
-    private String suburb; // For suburbs or neighborhoods
-    private String zipCode; // For international postal codes
+    // Many addresses belong to one user, so define the user reference
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties({"addresses"})// This specifies the foreign key column
+    private User user;
 
-    // Constructors, getters, and setters
-
-    // Other methods if needed
+    // Define the setUser method to set the user reference
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

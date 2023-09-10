@@ -1,7 +1,7 @@
 package com.gksvp.web.Security;
 
-import java.io.IOException;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,63 +16,64 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
+
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-	@Autowired
+	private static final Logger logger = LoggerFactory.getLogger(JwtRequestFilter.class);
+
+
 	private JwtUserDetailsService jwtUserDetailsService;
 
-	@Autowired
+
 	private JwtTokenUtil jwtTokenUtil;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-			throws ServletException, IOException {
+			throws ServletException, IOException, IOException {
 		final String requestTokenHeader = request.getHeader("Authorization");
-		System.out.println("token header from jwt req filter :" + requestTokenHeader);
+		logger.info("Token header from JwtRequestFilter: {}", requestTokenHeader);
 		String username = null;
 		String jwtToken = null;
-		// JWT Token is in the form "Bearer token". Remove Bearer word and get only the
-		// Token
+
+		// JWT Token is in the form "Bearer token". Remove Bearer word and get only the Token
 		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
 			jwtToken = requestTokenHeader.substring(7);
 			try {
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
 			} catch (IllegalArgumentException e) {
-				System.out.println("Unable to get JWT Token");
+				logger.error("Unable to get JWT Token");
 			} catch (ExpiredJwtException e) {
-				System.out.println("JWT Token has expired");
+				logger.error("JWT Token has expired");
 			} catch (Exception e) {
-				System.out.println("error on token check " + e.getMessage());
+				logger.error("Error on token check: {}", e.getMessage());
 			}
 		} else {
-
 			logger.warn("JWT Token does not begin with Bearer String");
 		}
 
-		// Once we get the token validate it.
+		// Once we get the token, validate it.
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
 			UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
 
-			// if token is valid configure Spring Security to manually set authentication
+			// If the token is valid, configure Spring Security to manually set authentication
 			if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
-				System.out.println(jwtTokenUtil.validateToken(jwtToken, userDetails));
-				System.out.println(" UPAUTH TOKEN METHOD: " + userDetails.getAuthorities());
+				logger.info("JWT Token is valid: {}", jwtTokenUtil.validateToken(jwtToken, userDetails));
+				logger.info("UPAUTH TOKEN METHOD: {}", userDetails.getAuthorities());
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
 				usernamePasswordAuthenticationToken
 						.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
 				// After setting the Authentication in the context, we specify
 				// that the current user is authenticated. So it passes the Spring Security
 				// Configurations successfully.
-				System.out.println("usernamePasswordAuthenticationToken  :   " + usernamePasswordAuthenticationToken);
+				logger.info("UsernamePasswordAuthenticationToken: {}", usernamePasswordAuthenticationToken);
 
 				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 			}
 		}
 		filterChain.doFilter(request, response);
-
 	}
-
 }

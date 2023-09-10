@@ -30,7 +30,7 @@ public class BlobImage {
     @CreationTimestamp
     private LocalDateTime createDateTime;
 
-    // Binary data of the image (you can choose byte[] or Blob)
+    // Binary data of the image (I  choose  Blob)
     @Lob
     @Column(name = "image_data", columnDefinition = "LONGBLOB")
     private byte[] imageData;

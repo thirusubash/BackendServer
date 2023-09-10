@@ -1,6 +1,7 @@
 package com.gksvp.web.Security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,7 +10,6 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
 import com.gksvp.web.Security.model.JwtRequest;
 import com.gksvp.web.Security.model.JwtResponse;
 import com.gksvp.web.user.entity.User;
@@ -19,42 +19,55 @@ import com.gksvp.web.util.AESEncryption;
 @RestController
 @CrossOrigin
 public class JwtAuthenticationController {
-	@Autowired
-	private AuthenticationManager authenticationManager;
 
-	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
+	private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationController.class);
 
-	@Autowired
-	private JwtUserDetailsService myUserDetailsService;
-	@Autowired
-	private UserService userService;
 
-	@Autowired
-	private AESEncryption aesEncryption;
+	private final AuthenticationManager authenticationManager;
+
+
+	private final JwtTokenUtil jwtTokenUtil;
+
+
+	private final JwtUserDetailsService myUserDetailsService;
+
+
+	private final UserService userService;
+
+
+	private final AESEncryption aesEncryption;
+
+	public JwtAuthenticationController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil, JwtUserDetailsService myUserDetailsService, UserService userService, AESEncryption aesEncryption) {
+		this.authenticationManager = authenticationManager;
+		this.jwtTokenUtil = jwtTokenUtil;
+		this.myUserDetailsService = myUserDetailsService;
+		this.userService = userService;
+		this.aesEncryption = aesEncryption;
+	}
 
 	@PostMapping(value = "/authenticate")
 	@CrossOrigin(origins = "https://localhost:8080", allowCredentials = "true")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 		String username;
-		switch (getUsernameType(authenticationRequest.getUsername())) {
-			case MOBILE_NUMBER:
-				User mobileUser = userService.getUserByMobileNo(authenticationRequest.getUsername());
-				username = mobileUser.getUserName();
-				System.out.println(username);
-				break;
-			case EMAIL:
-				User emailUser = userService.getUserByEmail(authenticationRequest.getUsername());
-				username = emailUser.getUserName();
-				break;
-			case OTHER:
-				username = aesEncryption.encrypt(authenticationRequest.getUsername());
-				break;
-			default:
-				// Provide a default value
-				username = null;
-				break;
-		}
+        switch (getUsernameType(authenticationRequest.getUsername())) {
+            case MOBILE_NUMBER -> {
+                User mobileUser = userService.getUserByMobileNo(authenticationRequest.getUsername());
+                username = mobileUser.getUserName();
+                logger.info("Authenticated with mobile number: {}", username);
+            }
+            case EMAIL -> {
+                User emailUser = userService.getUserByEmail(authenticationRequest.getUsername());
+                username = emailUser.getUserName();
+                logger.info("Authenticated with email: {}", username);
+            }
+            case OTHER -> {
+                username = aesEncryption.encrypt(authenticationRequest.getUsername());
+                logger.info("Authenticated with other username: {}", username);
+            }
+            default ->
+                // Provide a default value
+                    username = null;
+        }
 
 		authenticate(username, authenticationRequest.getPassword());
 		final UserDetails userDetails = myUserDetailsService.loadUserByUsername(username);
@@ -97,8 +110,10 @@ public class JwtAuthenticationController {
 
 			user.setActive(true);
 			user = userService.createUser(user);
+			logger.info("User registered successfully with id: {}", user.getId());
 			return ResponseEntity.ok("User( " + user.getId() + " )registered successfully");
 		} catch (Exception e) {
+			logger.error("An error occurred while registering user: {}", e.getMessage());
 			// Return an appropriate error response
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("An error occurred while registering user");

@@ -1,9 +1,9 @@
 package com.gksvp.web.user.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -18,15 +18,7 @@ public class UserKYCInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "kyc_info_id", nullable = false, unique = true)
-    private Long kyc_info_id;
-
-    @OneToOne(mappedBy = "kycInfo", cascade = CascadeType.ALL, orphanRemoval = true)
-    private UserKYCStatus kycStatus;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private User user;
+    private Long id;
 
     @Column(name = "document_type", nullable = false)
     private String documentType;
@@ -43,6 +35,14 @@ public class UserKYCInfo {
     @Column(name = "issue_authority")
     private String issueAuthority;
 
-    // Other KYC related attributes
+    @Column(name = "reviewer")
+    private String reviewer;
 
+    @Column(name = "status")
+    private boolean status;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore // Add this annotation
+    private User user;
 }

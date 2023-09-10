@@ -14,7 +14,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByUserName(String userName);
 
     // Fetch the user along with its associated KYC info using JOIN FETCH
-    @Query("SELECT u FROM User u LEFT JOIN FETCH u.kycInfo WHERE u.id = :userId")
+    @Query("SELECT u FROM User u LEFT JOIN FETCH u.kycInfoList WHERE u.id = :userId")
     User findByIdWithKYCInfo(@Param("userId") Long userId);
 
     boolean existsByEmail(String email);

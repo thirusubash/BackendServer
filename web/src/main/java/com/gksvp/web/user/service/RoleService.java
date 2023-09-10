@@ -1,7 +1,6 @@
 package com.gksvp.web.user.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.gksvp.web.user.entity.Role;
 import com.gksvp.web.user.entity.User;
@@ -9,7 +8,9 @@ import com.gksvp.web.user.entity.User;
 public interface RoleService {
     List<Role> getAllRoles();
 
-    Optional<Role> getRoleById(Long id);
+    Role getRoleById(Long id);
+
+    Role getRoleByName(String name);
 
     Role createRole(Role role);
 

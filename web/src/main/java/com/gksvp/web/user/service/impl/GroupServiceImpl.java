@@ -111,4 +111,9 @@ public class GroupServiceImpl implements GroupService {
         }
         return null;
     }
+
+    @Override
+    public Group getGroupByName(String user) {
+        return groupRepository.findByName("user");
+    }
 }

@@ -1,12 +1,15 @@
 package com.gksvp.web.user.controller;
 
+import com.gksvp.web.user.dto.RoleDto;
+import com.gksvp.web.user.dto.UserDto;
 import com.gksvp.web.user.entity.Role;
+import com.gksvp.web.user.entity.User;
 import com.gksvp.web.user.service.RoleService;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/roles")
@@ -19,14 +22,30 @@ public class RoleController {
     }
 
     @GetMapping
-    public List<Role> getAllRoles() {
-        return roleService.getAllRoles();
+    public List<RoleDto> getAllRoles() {
+        List<Role> roles = roleService.getAllRoles();
+        return roles.stream()
+                .map(this::convertToDto) // Use a method to convert Role to RoleDto
+                .toList();
     }
 
-    @GetMapping("/{id}")
-    public Optional<Role> getRoleById(@PathVariable Long id) {
-        return roleService.getRoleById(id);
+    private RoleDto convertToDto(Role role) {
+        RoleDto roleDto = new RoleDto();
+        roleDto.setId(role.getId());
+        roleDto.setName(role.getName());
+        // Map other properties from Role to RoleDto as needed
+        return roleDto;
     }
+
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RoleDto> getRoleById(@PathVariable Long id) {
+        Role role = roleService.getRoleById(id);
+       RoleDto roleDto= convertToDto(role);
+        return ResponseEntity.ok(roleDto);
+    }
+
 
     @PostMapping
     public Role createRole(@RequestBody Role role) {
@@ -42,4 +61,23 @@ public class RoleController {
     public void deleteRole(@PathVariable Long id) {
         roleService.deleteRole(id);
     }
+
+    @GetMapping("/{id}/users")
+    public List<User> getUsersInRole(@PathVariable Long id) {
+        // Replace UserDto with the appropriate DTO class for your users
+        return roleService.getUsersInRole(id);
+    }
+
+    @PutMapping("/{id}/users")
+    public List<User> updateUserToRole(@PathVariable Long id, @RequestBody List<Long> userIds) {
+        return roleService.updateUsersInRole(id, userIds);
+    }
+
+    @DeleteMapping("/{roleId}")
+    public List<User> removeUsersFromRole(@PathVariable Long roleId, @RequestBody List<Long> userIds) {
+        return roleService.removeUsersFromRole(roleId, userIds);
+    }
+
 }
+
+

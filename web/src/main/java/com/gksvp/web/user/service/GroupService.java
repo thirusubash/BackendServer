@@ -23,4 +23,5 @@ public interface GroupService {
 
     List<User> listAllUsersInTheGroup(Long id);
 
+    Group getGroupByName(String user);
 }

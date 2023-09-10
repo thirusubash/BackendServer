@@ -1,6 +1,9 @@
 package com.gksvp.web.user.controller;
 
+import com.gksvp.web.user.dto.GroupDto;
+import com.gksvp.web.user.dto.RoleDto;
 import com.gksvp.web.user.entity.Group;
+import com.gksvp.web.user.entity.Role;
 import com.gksvp.web.user.entity.User;
 import com.gksvp.web.user.service.GroupService;
 
@@ -9,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/groups")
@@ -19,22 +23,34 @@ public class GroupController {
     public GroupController(GroupService groupService) {
         this.groupService = groupService;
     }
-
     @GetMapping
-    public ResponseEntity<List<Group>> getAllGroups() {
+    public ResponseEntity<List<GroupDto>> getAllGroups() {
         List<Group> groups = groupService.getAllGroups();
-        return new ResponseEntity<>(groups, HttpStatus.OK);
+        List<GroupDto> groupDtos = groups.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(groupDtos, HttpStatus.OK);
+    }
+
+    private GroupDto convertToDto(Group group) {
+        GroupDto groupDto = new GroupDto();
+        groupDto.setId(group.getId());
+        groupDto.setName(group.getName());
+        // Map other properties from Group to GroupDto as needed
+        return groupDto;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Group> getGroupById(@PathVariable Long id) {
+    public ResponseEntity<GroupDto> getGroupById(@PathVariable Long id) {
         Group group = groupService.getGroupById(id);
         if (group != null) {
-            return new ResponseEntity<>(group, HttpStatus.OK);
+            GroupDto groupDto = convertToDto(group);
+            return new ResponseEntity<>(groupDto, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
 
     @PostMapping
     public ResponseEntity<Group> createGroup(@RequestBody Group group) {
