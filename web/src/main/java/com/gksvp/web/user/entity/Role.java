@@ -1,8 +1,9 @@
 package com.gksvp.web.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.util.List;
 
 @Data

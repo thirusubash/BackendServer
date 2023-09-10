@@ -1,17 +1,15 @@
 package com.gksvp.web.Security;
 
+import com.gksvp.web.user.entity.Role;
+import com.gksvp.web.user.entity.User;
+import com.gksvp.web.user.service.UserService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import org.springframework.transaction.annotation.Transactional;
-
-import com.gksvp.web.user.entity.Role;
-import com.gksvp.web.user.entity.User;
-import com.gksvp.web.user.service.UserService;
 
 import java.util.List;
 import java.util.Set;
@@ -53,9 +51,9 @@ public class JwtUserDetailsService implements UserDetailsService {
                 user.getUserName(),
                 user.getPassword(),
                 user.getActive(),
-                true,
-                true,
-                true,
+                user.getAccountNonExpired(),
+                user.getCredentialsNonExpired(),
+                user.getAccountNotLocked(),
                 authorities);
     }
 }

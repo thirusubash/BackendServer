@@ -1,14 +1,14 @@
 package com.gksvp.web.util.otp;
 
+import com.twilio.rest.api.v2010.account.Message;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.twilio.rest.api.v2010.account.Message;
 
 @Service
 public class OtpService {

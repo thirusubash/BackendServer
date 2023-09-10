@@ -1,16 +1,10 @@
 package com.gksvp.web.media.entity;
 
+import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -32,11 +26,11 @@ public class BlobImage {
 
     // Binary data of the image (I  choose  Blob)
     @Lob
-    @Column(name = "image_data", columnDefinition = "LONGBLOB")
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] imageData;
     @Lob
-    @Column(name = "thumbnail_data", columnDefinition = "MEDIUMBLOB")
-    private byte[] tubmbnail;
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private byte[] thumbnail;
 
     private String alt;
     private String description;

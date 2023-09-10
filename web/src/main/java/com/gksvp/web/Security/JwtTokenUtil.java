@@ -1,28 +1,26 @@
 package com.gksvp.web.Security;
 
+import com.gksvp.web.user.entity.User;
+import com.gksvp.web.user.service.UserService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.security.KeyPair;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-
-import com.gksvp.web.user.entity.User;
-import com.gksvp.web.user.service.UserService;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtTokenUtil implements Serializable {
@@ -33,7 +31,7 @@ public class JwtTokenUtil implements Serializable {
 
 	private final UserService userService;
 
-	private final KeyPair keys = Keys.keyPairFor(SignatureAlgorithm.RS512);
+	private final KeyPair keys = Keys.keyPairFor(SignatureAlgorithm.PS512);
 
 	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
@@ -86,9 +84,9 @@ public class JwtTokenUtil implements Serializable {
 		Map<String, Object> claims = new HashMap<>();
 		User user = userService.getUserByUserName(userDetails.getUsername());
 
-		final String authorities = userDetails.getAuthorities().stream()
+		final List<String> authorities = userDetails.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority)
-				.collect(Collectors.joining(","));
+				.collect(Collectors.toList());
 
 		claims.put("roles", authorities);
 		claims.put("iss", "www.gksvp.com");
@@ -98,11 +96,12 @@ public class JwtTokenUtil implements Serializable {
 		return doGenerateToken(claims, userDetails.getUsername());
 	}
 
+
 	private String doGenerateToken(Map<String, Object> claims, String subject) {
 		// Set your audience here
 		String audience = "https://gksvp.com";
 		return Jwts.builder()
-				.setHeaderParam("alg", "RS512") // Algorithm
+				.setHeaderParam("alg", "PS512") // Algorithm
 				.setHeaderParam("typ", "JWT") // Token Type
 				.setClaims(claims)
 				.setSubject(subject)

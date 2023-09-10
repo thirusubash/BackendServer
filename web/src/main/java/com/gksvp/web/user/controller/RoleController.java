@@ -1,11 +1,9 @@
 package com.gksvp.web.user.controller;
 
 import com.gksvp.web.user.dto.RoleDto;
-import com.gksvp.web.user.dto.UserDto;
 import com.gksvp.web.user.entity.Role;
 import com.gksvp.web.user.entity.User;
 import com.gksvp.web.user.service.RoleService;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

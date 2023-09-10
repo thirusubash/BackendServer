@@ -1,6 +1,7 @@
 package com.gksvp.web.user.dto;
 
 import lombok.Data;
+
 import java.time.LocalDate;
 
 @Data

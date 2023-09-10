@@ -1,9 +1,9 @@
 package com.gksvp.web.user.service;
 
-import java.util.List;
-
 import com.gksvp.web.user.entity.Role;
 import com.gksvp.web.user.entity.User;
+
+import java.util.List;
 
 public interface RoleService {
     List<Role> getAllRoles();

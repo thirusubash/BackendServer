@@ -2,13 +2,12 @@ package com.gksvp.web.user.controller;
 
 import com.gksvp.web.user.entity.*;
 import com.gksvp.web.user.service.UserService;
-import com.gksvp.web.util.AESEncryption;
 import com.gksvp.web.util.otp.OtpService;
 import com.twilio.rest.api.v2010.account.Message;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,12 +19,11 @@ public class UserController {
 
     private final UserService userService;
     private final OtpService otpService;
-    private final AESEncryption aesEncryption;
 
-    public UserController(UserService userService, OtpService otpService, AESEncryption aesEncryption) {
+
+    public UserController(UserService userService, OtpService otpService) {
         this.userService = userService;
         this.otpService = otpService;
-        this.aesEncryption = aesEncryption;
     }
 
     @GetMapping
@@ -47,17 +45,14 @@ public class UserController {
     @PostMapping
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         try {
-            String encryptedEmail = aesEncryption.encrypt(user.getEmail());
-            String encryptedMobileNo = aesEncryption.encrypt(user.getMobileNo());
-            String encryptedUserName = aesEncryption.encrypt(user.getUserName());
 
-            if (userService.isEmailTaken(encryptedEmail)) {
+            if (userService.isEmailTaken(user.getEmail())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email is already taken");
             }
-            if (userService.isMobileTaken(encryptedMobileNo)) {
+            if (userService.isMobileTaken(user.getMobileNo())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mobile number is already taken");
             }
-            if (userService.isUsernameTaken(encryptedUserName)) {
+            if (userService.isUsernameTaken(user.getUserName())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username is already taken");
             }
             user.setActive(true);
@@ -92,6 +87,7 @@ public class UserController {
 
     @PostMapping("/change-number-request")
     public ResponseEntity<String> changenumberrequest(@RequestParam Long id, @RequestParam String mobile_no) {
+
         try {
             Message message = otpService.mobileOtp(mobile_no);
             if (message.getStatus() == Message.Status.FAILED) {

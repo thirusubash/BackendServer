@@ -1,16 +1,14 @@
 package com.gksvp.web.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -66,6 +64,11 @@ public class User {
     private Boolean emailVerified = false;
     @Builder.Default
     private Boolean active = true;
+
+    private Boolean accountNonExpired = true;
+    private Boolean credentialsNonExpired = true;
+    private Boolean accountNotLocked = true;
+
 
     private String url;
 

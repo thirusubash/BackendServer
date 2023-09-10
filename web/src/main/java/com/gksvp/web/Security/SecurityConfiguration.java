@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
@@ -18,6 +19,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authz) -> authz
+//                        .requestMatchers("/users").hasAuthority("user")
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults());
         return http.build();
@@ -36,8 +38,7 @@ public class SecurityConfiguration {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/register", "/authenticate", "/roles", "/groups",
-                "/**");
+        return (web) -> web.ignoring().requestMatchers("/register", "/authenticate", "/roles", "/groups","/**" );
     }
 
 }

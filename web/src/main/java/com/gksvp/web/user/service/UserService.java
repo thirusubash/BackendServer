@@ -1,10 +1,10 @@
 package com.gksvp.web.user.service;
 
-import java.util.List;
-import java.util.Set;
-
 import com.gksvp.web.user.entity.*;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Set;
 
 @Service
 public interface UserService {

@@ -1,12 +1,9 @@
 package com.gksvp.web.user.controller;
 
 import com.gksvp.web.user.dto.GroupDto;
-import com.gksvp.web.user.dto.RoleDto;
 import com.gksvp.web.user.entity.Group;
-import com.gksvp.web.user.entity.Role;
 import com.gksvp.web.user.entity.User;
 import com.gksvp.web.user.service.GroupService;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

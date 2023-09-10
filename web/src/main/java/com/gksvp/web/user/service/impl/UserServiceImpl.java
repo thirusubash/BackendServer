@@ -3,7 +3,9 @@ package com.gksvp.web.user.service.impl;
 import com.gksvp.web.exception.GroupNotFoundException;
 import com.gksvp.web.exception.UserNotFoundException;
 import com.gksvp.web.user.entity.*;
-import com.gksvp.web.user.repository.*;
+import com.gksvp.web.user.repository.GroupRepository;
+import com.gksvp.web.user.repository.RoleRepository;
+import com.gksvp.web.user.repository.UserRepository;
 import com.gksvp.web.user.service.GroupService;
 import com.gksvp.web.user.service.RoleService;
 import com.gksvp.web.user.service.UserService;
@@ -11,15 +13,19 @@ import com.gksvp.web.util.AESEncryption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final AESEncryption aesEncryption;
     private final RoleService roleService;
@@ -28,9 +34,10 @@ public class UserServiceImpl implements UserService {
     private final GroupRepository groupRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, AESEncryption aesEncryption,
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, AESEncryption aesEncryption,
                            RoleRepository roleRepository, RoleService roleService,
                            GroupRepository groupRepository, GroupService groupService) {
+        this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.aesEncryption = aesEncryption;
         this.roleRepository = roleRepository;
@@ -76,6 +83,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) throws Exception {
+        if (isEmailTaken(user.getEmail())) throw new Exception("Email is already taken");
+        if (isMobileTaken(user.getMobileNo())) throw new Exception("Mobile number is already taken");
+        if (isUsernameTaken(user.getUserName())) throw new Exception("Username is already taken");
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         processSensitiveUserData(user, true); // Encrypt sensitive user data
 
         // Assuming Role class has a constructor that takes the role ID
@@ -90,6 +102,7 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.save(user);
     }
+
 
     @Override
     @Transactional(readOnly = true)
@@ -197,18 +210,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isEmailTaken(String email) {
-        return userRepository.existsByEmail(email);
+    public boolean isEmailTaken(String email) throws Exception {
+        return userRepository.existsByEmail(encrypt(email));
     }
 
     @Override
-    public boolean isMobileTaken(String mobile) {
-        return userRepository.existsByMobileNo(mobile);
+    public boolean isMobileTaken(String mobile) throws Exception {
+        return userRepository.existsByMobileNo(encrypt(mobile));
     }
 
     @Override
-    public boolean isUsernameTaken(String username) {
-        return userRepository.existsByUserName(username);
+    public boolean isUsernameTaken(String username) throws Exception {
+        return userRepository.existsByUserName(encrypt(username));
     }
 
 

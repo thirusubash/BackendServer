@@ -1,16 +1,14 @@
 package com.gksvp.web.media.service;
 
-import java.util.Optional;
-import java.util.UUID;
-
-import org.springframework.stereotype.Service;
-
 import com.gksvp.web.media.entity.BlobImage;
 import com.gksvp.web.media.repository.BlobImageRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class BlobImageService {
@@ -33,7 +31,7 @@ public class BlobImageService {
 
         // Generate and set the thumbnail data
         byte[] thumbnailData = thumbnailGenerator.generateThumbnail(file.getBytes(), file.getContentType());
-        blobImage.setTubmbnail(thumbnailData);
+        blobImage.setThumbnail(thumbnailData);
 
         blobImage.setDescription(description);
 

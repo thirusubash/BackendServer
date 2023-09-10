@@ -5,7 +5,6 @@ import com.gksvp.web.user.entity.User;
 import com.gksvp.web.user.repository.GroupRepository;
 import com.gksvp.web.user.repository.UserRepository;
 import com.gksvp.web.user.service.GroupService;
-
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

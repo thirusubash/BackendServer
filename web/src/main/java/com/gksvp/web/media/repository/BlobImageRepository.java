@@ -1,10 +1,9 @@
 package com.gksvp.web.media.repository;
 
-import java.util.UUID;
-
+import com.gksvp.web.media.entity.BlobImage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.gksvp.web.media.entity.BlobImage;
+import java.util.UUID;
 
 public interface BlobImageRepository extends JpaRepository<BlobImage, UUID> {
 }

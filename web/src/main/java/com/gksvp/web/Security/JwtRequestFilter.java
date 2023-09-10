@@ -1,20 +1,18 @@
 package com.gksvp.web.Security;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import io.jsonwebtoken.ExpiredJwtException;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
@@ -24,14 +22,19 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	private static final Logger logger = LoggerFactory.getLogger(JwtRequestFilter.class);
 
 
-	private JwtUserDetailsService jwtUserDetailsService;
+	private final JwtUserDetailsService jwtUserDetailsService;
 
 
-	private JwtTokenUtil jwtTokenUtil;
+	private final JwtTokenUtil jwtTokenUtil;
+
+	public JwtRequestFilter(JwtUserDetailsService jwtUserDetailsService, JwtTokenUtil jwtTokenUtil) {
+		this.jwtUserDetailsService = jwtUserDetailsService;
+		this.jwtTokenUtil = jwtTokenUtil;
+	}
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-			throws ServletException, IOException, IOException {
+			throws ServletException, IOException {
 		final String requestTokenHeader = request.getHeader("Authorization");
 		logger.info("Token header from JwtRequestFilter: {}", requestTokenHeader);
 		String username = null;

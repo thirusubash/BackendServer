@@ -1,8 +1,7 @@
 package com.gksvp.web.user.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.gksvp.web.user.entity.Group;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GroupRepository extends JpaRepository<Group, Long> {
 
