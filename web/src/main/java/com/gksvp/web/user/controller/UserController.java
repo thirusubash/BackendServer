@@ -1,5 +1,6 @@
 package com.gksvp.web.user.controller;
 
+import com.gksvp.web.user.dto.UserDto;
 import com.gksvp.web.user.entity.*;
 import com.gksvp.web.user.service.UserService;
 import com.gksvp.web.util.otp.OtpService;
@@ -27,14 +28,14 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() throws Exception {
-        List<User> users = userService.getAllUsers();
+    public ResponseEntity<List<UserDto>> getAllUsers() throws Exception {
+        List<UserDto> users = userService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) throws Exception {
-        User user = userService.getUserById(id);
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) throws Exception {
+        UserDto user = userService.getUserById(id);
         if (user != null) {
             return new ResponseEntity<>(user, HttpStatus.OK);
         } else {

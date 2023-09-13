@@ -1,5 +1,7 @@
 package com.gksvp.web.homepage.entity;
 
+
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,6 +14,7 @@ public class Homepage {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
+
   private String title;
   private String type;
   private String button1Title;
@@ -25,6 +28,8 @@ public class Homepage {
   private String message;
 
   @ElementCollection
+  @CollectionTable(name = "homepage_uuids") // Specify the name of the table
   private List<String> uuids;
 }
+
 

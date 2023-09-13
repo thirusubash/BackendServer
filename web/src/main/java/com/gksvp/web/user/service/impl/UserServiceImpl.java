@@ -2,6 +2,7 @@ package com.gksvp.web.user.service.impl;
 
 import com.gksvp.web.exception.GroupNotFoundException;
 import com.gksvp.web.exception.UserNotFoundException;
+import com.gksvp.web.user.dto.UserDto;
 import com.gksvp.web.user.entity.*;
 import com.gksvp.web.user.repository.GroupRepository;
 import com.gksvp.web.user.repository.RoleRepository;
@@ -10,6 +11,7 @@ import com.gksvp.web.user.service.GroupService;
 import com.gksvp.web.user.service.RoleService;
 import com.gksvp.web.user.service.UserService;
 import com.gksvp.web.util.AESEncryption;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +19,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final AESEncryption aesEncryption;
@@ -34,9 +34,10 @@ public class UserServiceImpl implements UserService {
     private final GroupRepository groupRepository;
 
     @Autowired
-    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, AESEncryption aesEncryption,
+    public UserServiceImpl(ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRepository userRepository, AESEncryption aesEncryption,
                            RoleRepository roleRepository, RoleService roleService,
                            GroupRepository groupRepository, GroupService groupService) {
+        this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.aesEncryption = aesEncryption;
@@ -62,24 +63,77 @@ public class UserServiceImpl implements UserService {
             user.setEmail(encrypt(user.getEmail()));
             user.setMobileNo(encrypt(user.getMobileNo()));
         } else {
+            user.setEmail(decrypt(user.getEmail()));
+            user.setMobileNo(decrypt(user.getMobileNo()));
+            // Mask the email address
+            if (user.getEmail() != null && user.getEmail().length() >= 4) {
+                int atIndex = user.getEmail().lastIndexOf('@');
+
+                if (atIndex >= 0) {
+                    String domain = user.getEmail().substring(atIndex);
+                    String localPart = user.getEmail().substring(0, atIndex);
+
+                    int localPartLength = localPart.length();
+                    String maskedLocalPart = localPart.substring(0, 3) + // Show first 3 characters
+                            new String(new char[localPartLength - 6]).replace('\0', '*') + // Mask middle characters
+                            localPart.substring(localPartLength - 3); // Show last 3 characters
+
+                    user.setEmail(maskedLocalPart + domain);
+                }
+            }
+
+            // Mask the mobile number
+            String mobileNo = user.getMobileNo();
+            if (mobileNo != null && mobileNo.length() >= 4) {
+                int maskedLength = mobileNo.length() - 4;
+                char[] maskedChars = new char[maskedLength];
+                Arrays.fill(maskedChars, '*');
+
+                String maskedMobileNo = new String(maskedChars) + mobileNo.substring(maskedLength);
+                user.setMobileNo(maskedMobileNo);
+            }
+
+            // Set a placeholder for the password
             user.setPassword("**** && ****");
+
             user.setLastName(decrypt(user.getLastName()));
             user.setFirstName(decrypt(user.getFirstName()));
             user.setUserName(decrypt(user.getUserName()));
-            user.setEmail(decrypt(user.getEmail()));
-            user.setMobileNo(decrypt(user.getMobileNo()));
+
+
+            // Decrypt documentNumber in KycInfoList (if it exists)
+            if (user.getKycInfoList() != null) {
+                List<UserKYCInfo> kycInfoList = user.getKycInfoList();
+                for (UserKYCInfo kycInfo : kycInfoList) {
+                    if (kycInfo.getDocumentNumber() != null && kycInfo.getDocumentNumber().length() >= 4) {
+                        String decryptedDocumentNumber = decrypt(kycInfo.getDocumentNumber());
+                        char[] documentNumberChars = decryptedDocumentNumber.toCharArray();
+                        int length = documentNumberChars.length;
+
+                        // Mask all characters except the last 4
+                        for (int i = 0; i < length - 4; i++) {
+                            documentNumberChars[i] = '*';
+                        }
+
+                        kycInfo.setDocumentNumber(new String(documentNumberChars));
+                    }
+                }
+            }
         }
     }
 
+
+
     @Override
     @Transactional(readOnly = true)
-    public User getUserById(Long id) throws Exception {
+    public UserDto getUserById(Long id) throws Exception {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
             processSensitiveUserData(user, false); // Decrypt sensitive user data
         }
-        return user;
+        return modelMapper.map(user, UserDto.class); // Use 'user' as the source object
     }
+
 
     @Override
     public User createUser(User user) throws Exception {
@@ -106,22 +160,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> getAllUsers() throws Exception {
+    public List<UserDto> getAllUsers() throws Exception {
         List<User> users = userRepository.findAll();
         for (User user : users) {
             processSensitiveUserData(user, false); // Decrypt sensitive user data
         }
-        return users;
+        return users.stream()
+                .map(user -> modelMapper.map(user, UserDto.class))
+                .toList();
     }
+
 
     @Override
     public User updateUser(Long id, User user) throws Exception {
         processSensitiveUserData(user, true); // Encrypt sensitive user data
+
         User existingUser = userRepository.findById(id).orElse(null);
         if (existingUser != null) {
             // Update user fields based on your requirements
-            existingUser.setUserName(user.getUserName());
-            existingUser.setEmail(user.getEmail());
+            if(!isEmailTaken(user.getEmail())){
+                existingUser.setUserName(user.getUserName());
+            }
+            if(!isUsernameTaken(user.getUserName())){
+                existingUser.setEmail(user.getEmail());
+            }
+           if(!isMobileTaken((user.getMobileNo()))){
+               existingUser.setMobileNo(user.getMobileNo());
+           }
             existingUser.setFirstName(user.getFirstName());
             existingUser.setLastName(user.getLastName());
             existingUser.setDateOfBirth(user.getDateOfBirth());
@@ -192,17 +257,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean updateNumber(Long userId, String mobileNo) throws Exception {
         User existingUser = userRepository.findById(userId).orElse(null);
-        if (existingUser != null) {
+        if (existingUser != null && !isMobileTaken(mobileNo)) {
             existingUser.setMobileNo(encrypt(mobileNo));
             return true;
         }
         return false;
     }
 
+
     @Override
     public Boolean updateEmail(Long userId, String email) throws Exception {
         User existingUser = userRepository.findById(userId).orElse(null);
-        if (existingUser != null) {
+        if (existingUser != null && isEmailTaken(email)) {
             existingUser.setEmail(encrypt(email));
             return true;
         }
@@ -377,7 +443,7 @@ public class UserServiceImpl implements UserService {
 
         // Save the user with the updated list of KYC information
         User savedUser = userRepository.save(user);
-
+        processSensitiveUserData(savedUser, false);
         // Log a message indicating that KYC info has been added
         logger.warn("KYC info added for user with ID: {}", userId);
 
@@ -409,6 +475,7 @@ public class UserServiceImpl implements UserService {
             for (UserKYCInfo kycInfo : kycInfos) {
                 if (kycInfo.getId().equals(kycInfoId)) {
                     kycInfo.setStatus(status);
+                    processSensitiveUserData(user , false);
                     return userRepository.save(user);
                 }
             }

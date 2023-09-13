@@ -23,8 +23,8 @@ public class UserDto {
     private LocalDate dateOfBirth;
     private LocalDateTime createDateTime;
     private LocalDateTime updateDateTime;
-    private Boolean mobileVerified;
-    private Boolean emailVerified;
+//    private Boolean mobileVerified;
+//    private Boolean emailVerified;
     private Boolean active;
     private String url;
 

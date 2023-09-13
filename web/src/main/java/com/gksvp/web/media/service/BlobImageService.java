@@ -66,13 +66,11 @@ public class BlobImageService {
     }
 
     @Transactional
-    public boolean deleteImage(UUID id) {
+    public void deleteImage(UUID id) {
         Optional<BlobImage> optionalBlobImage = blobImageRepository.findById(id);
         if (optionalBlobImage.isPresent()) {
             BlobImage blobImage = optionalBlobImage.get();
             blobImageRepository.delete(blobImage);
-            return true;
         }
-        return false;
     }
 }

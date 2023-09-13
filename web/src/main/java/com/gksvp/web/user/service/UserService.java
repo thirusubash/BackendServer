@@ -1,5 +1,6 @@
 package com.gksvp.web.user.service;
 
+import com.gksvp.web.user.dto.UserDto;
 import com.gksvp.web.user.entity.*;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +10,9 @@ import java.util.Set;
 @Service
 public interface UserService {
 
-    List<User> getAllUsers() throws Exception;
+    List<UserDto> getAllUsers() throws Exception;
 
-    User getUserById(Long id) throws Exception;
+    UserDto getUserById(Long id) throws Exception;
 
     User createUser(User user) throws Exception;
 
