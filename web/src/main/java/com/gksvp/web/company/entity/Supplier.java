@@ -2,14 +2,13 @@ package com.gksvp.web.company.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "suppliers")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,6 +30,9 @@ public class Supplier {
 
     @Column(nullable = false)
     private String phoneNumber;
+
+
+    private String Address;
 
     @ManyToMany(mappedBy = "suppliers")
     @JsonIgnoreProperties("suppliers")

@@ -3,6 +3,8 @@ package com.gksvp.web.company.service;
 import com.gksvp.web.company.entity.Employee;
 import com.gksvp.web.company.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,5 +42,5 @@ public class EmployeeService {
         employeeRepository.deleteById(employeeId);
     }
 
-    // Add other business logic methods as needed
+
 }

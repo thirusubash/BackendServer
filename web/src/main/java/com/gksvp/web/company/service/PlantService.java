@@ -4,9 +4,10 @@ package com.gksvp.web.company.service;
 import com.gksvp.web.company.entity.Plant;
 import com.gksvp.web.company.repository.PlantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class PlantService {
@@ -17,10 +18,9 @@ public class PlantService {
         this.plantRepository = plantRepository;
     }
 
-    public List<Plant> getAllPlants() {
-        return plantRepository.findAll();
+    public Page<Plant> getAllPlants(Pageable Pageable) {
+        return plantRepository.findAll(Pageable);
     }
-
     public Plant getPlantById(Long plantId) {
         return plantRepository.findById(plantId).orElse(null);
     }
@@ -31,7 +31,7 @@ public class PlantService {
 
     public Plant updatePlant(Long plantId, Plant updatedPlant) {
         if (plantRepository.existsById(plantId)) {
-            updatedPlant.setName(updatedPlant.getName());
+            updatedPlant.setId(plantId);
             return plantRepository.save(updatedPlant);
         }
         return null; // Handle non-existing plant

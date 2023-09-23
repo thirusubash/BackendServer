@@ -1,6 +1,7 @@
 package com.gksvp.web.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.gksvp.web.company.entity.Employee;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
@@ -94,4 +95,7 @@ public class User {
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "user_groups", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
     private Set<Group> groups;
+
+
+
 }

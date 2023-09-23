@@ -1,13 +1,12 @@
 package com.gksvp.web.company.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -26,7 +25,7 @@ public class CompanyLocation {
     private String ipAddress;
 
     @ManyToOne// This creates a foreign key column in CompanyLocation
-    @JsonIgnoreProperties("locations")
+    @JsonBackReference
     private Company company;
 
     @PrePersist

@@ -3,6 +3,8 @@ package com.gksvp.web.company.controller;
 import com.gksvp.web.company.entity.Plant;
 import com.gksvp.web.company.service.PlantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +21,9 @@ public class PlantController {
     }
 
     @GetMapping
-    public List<Plant> getAllPlants() {
-        return plantService.getAllPlants();
+    public Page<Plant> getAllPlants(Pageable pageable
+    ) {
+        return plantService.getAllPlants(pageable);
     }
 
     @GetMapping("/{plantId}")
@@ -45,4 +48,3 @@ public class PlantController {
 
     // Add other endpoints as needed
 }
-

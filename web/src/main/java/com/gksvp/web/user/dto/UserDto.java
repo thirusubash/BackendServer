@@ -1,6 +1,10 @@
 package com.gksvp.web.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.gksvp.web.company.entity.Employee;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToOne;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -42,4 +46,8 @@ public class UserDto {
 
     @JsonIgnoreProperties("users")
     private Set<GroupDto> groups;
+
+//    @JsonIgnoreProperties("users")
+//    private Employee employee;
+
 }
