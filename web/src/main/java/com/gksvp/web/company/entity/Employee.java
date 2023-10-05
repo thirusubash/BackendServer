@@ -1,54 +1,41 @@
 package  com.gksvp.web.company.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.gksvp.web.user.entity.User;
+
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.ArrayList;
+
+import java.util.List;
 
 @Entity
 @Table(name = "employees")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@Data
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
     private String firstName;
-
-
     private String lastName;
-
-
     private String employeeCode;
-
-
-    private Date hireDate;
-
-
-    private String designation;
-
-    private String Email;
+    private String email;
     private String mobileNumber;
 
     @Column(nullable = false)
     private double salary;
 
     private boolean status = false;
-
-    private Date dateOfBirth;
-    private int gender;
+    private LocalDate hireDate;
+    private LocalDate dateOfBirth;
+    private String gender;
 
     private String  nationality;
     private String  maritalStatus;
@@ -61,19 +48,23 @@ public class Employee {
     private String education;
     private String skills;
     private String certifications;
-    private String role;
     private String backgroundCheck;
-//    @OneToOne
-//    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "designation_id")
+    @JsonIgnoreProperties({"companyAddresses","products","plants","employees","bankAccounts","suppliers","locations","groups","roles","designations","designation"})
+    private Designation designation;
+
+
 
     @ManyToOne
     @JoinColumn(name = "company_id")
-    @JsonIgnoreProperties("employees")
+    @JsonIgnoreProperties({"companyAddresses","products","plants","employees","bankAccounts","suppliers","locations","groups","roles","designations","company"})
     private Company company;
 
     @ManyToOne
     @JoinColumn(name = "plant_id") // Specify the name of the foreign key column
-    @JsonIgnoreProperties("employees")
+    @JsonIgnoreProperties({"companyAddresses","products","employees","bankAccounts","suppliers","locations","groups","roles","designations"})
     private Plant plant; // Link to the Plant entity
     private String password;
 
@@ -84,5 +75,23 @@ public class Employee {
     @LastModifiedDate
     @Column(nullable = false)
     private LocalDateTime lastModifiedDate;
+    @ManyToMany
+    @JoinTable(
+            name = "employee_role",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    @JsonIgnoreProperties({"companyAddresses","products","employees","bankAccounts","suppliers","locations","roles","groups","designations"}) // Assuming the Role entity has a list of employees
+    private List<CompanyRole> roles = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "employee_role",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    @JsonIgnoreProperties({"companyAddresses","products","employees","bankAccounts","suppliers","locations","roles","groups","designations"}) // Assuming the Role entity has a list of employees
+    private List<CompanyGroup> groups = new ArrayList<>();
+
 
 }

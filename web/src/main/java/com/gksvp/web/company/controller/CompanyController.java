@@ -1,7 +1,10 @@
 package com.gksvp.web.company.controller;
 
+import com.gksvp.web.company.dto.BasicCompanyDTO;
+import com.gksvp.web.company.dto.EmployeeDTO;
 import com.gksvp.web.company.entity.*;
 import com.gksvp.web.company.service.CompanyService;
+import com.gksvp.web.company.service.CompanyTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
@@ -14,21 +17,22 @@ import org.springframework.data.domain.PageRequest;
 public class CompanyController {
     private final CompanyService companyService;
 
-
-    public CompanyController(CompanyService companyService) {
+private  final  CompanyTemplate companyTemplate;
+    public CompanyController(CompanyService companyService, CompanyTemplate companyTemplate) {
         this.companyService = companyService;
+        this.companyTemplate = companyTemplate;
     }
 
 
 
     // Get companies with pagination and search
     @GetMapping
-    public ResponseEntity<Page<Company>> getAllCompanies(
+    public ResponseEntity<Page<BasicCompanyDTO>> getAllCompanies(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String keyword) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Company> companies;
+        Page<BasicCompanyDTO> companies;
 
         if (keyword != null && !keyword.isEmpty()) {
             companies = companyService.searchCompaniesByName(keyword, pageable);
@@ -38,16 +42,18 @@ public class CompanyController {
 
         return ResponseEntity.ok(companies);
     }
+
+
     // Endpoint to get all employees of a company with pagination and search
     @GetMapping("/{companyId}/employees")
-    public ResponseEntity<Page<Employee>> getCompanyEmployees(
+    public ResponseEntity<Page<EmployeeDTO>> getCompanyEmployees(
             @PathVariable Long companyId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String keyword) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<Employee> employees;
+        Page<EmployeeDTO> employees;
 
         if (keyword != null && !keyword.trim().isEmpty()) {
             employees = companyService.searchEmployeesByCompanyAndKeyword(companyId, keyword, pageable);
@@ -76,6 +82,48 @@ public class CompanyController {
 
         return ResponseEntity.ok(plants);
     }
+ 
+    @GetMapping("/{companyId}/bank-details")
+    public ResponseEntity<Page<BankDetails>> getCompanyBankdetails(
+            @PathVariable Long companyId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String keyword) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<BankDetails> bankDetails;
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            bankDetails = companyService.searchBankdetailsByCompanyAndKeyword(companyId, keyword, pageable);
+        } else {
+            bankDetails = companyService.getBankdetailsByCompanyId(companyId, pageable);
+        }
+
+        return ResponseEntity.ok(bankDetails);
+    }
+
+    @GetMapping("/{companyId}/address")
+    public ResponseEntity<Page<CompanyAddress>> getCompanyAddress(
+            @PathVariable Long companyId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String keyword) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CompanyAddress> companyAddresses;
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            companyAddresses = companyService.searchCompanyAddressByCompanyAndKeyword(companyId, keyword, pageable);
+        } else {
+            companyAddresses = companyService.getCompanyAddressByCompanyId(companyId, pageable);
+        }
+
+        return ResponseEntity.ok(companyAddresses);
+    }
+
+
+
+
 
     @GetMapping("/{companyId}")
     public Company getCompanyById(@PathVariable Long companyId) {
@@ -84,7 +132,7 @@ public class CompanyController {
 
     @PostMapping
     public Company createCompany(@RequestBody Company company) {
-        return companyService.createCompany(company);
+        return companyTemplate.createCompanyWithDefaults(company);
     }
 
     @PutMapping("/{companyId}")
@@ -169,6 +217,23 @@ public class CompanyController {
         return companyService.updateEmployeeStatus(companyId, employeeId, status);
     }
 
+    @PatchMapping("/{companyId}/plants/{plantId}/status")
+    public Boolean updatePlantStatus(
+            @PathVariable Long companyId,
+            @PathVariable Long plantId,
+            @RequestParam Boolean status) {
+        return companyService.updatePlantStatus(companyId, plantId, status);
+    }
+
+    @PatchMapping("/{companyId}/bank-details/{bankId}/status")
+    public Boolean updateBankDetailStatus(
+            @PathVariable Long companyId,
+            @PathVariable Long bankId,
+            @RequestParam Boolean status) {
+        return companyService.updateBankDetailsStatus(companyId, bankId, status);
+    }
+
+
     @PatchMapping("/{companyId}/status")
     public Boolean updateStatus(
             @PathVariable Long companyId,
@@ -176,13 +241,13 @@ public class CompanyController {
         return companyService.updateStatus(companyId,  status);
     }
 
-    @PostMapping("/{companyId}/bankdetails")
+    @PostMapping("/{companyId}/bank-details")
     public String addOrUpdateBankDetails(@PathVariable Long companyId,
                                          @RequestBody BankDetails bankDetails) {
         return companyService.updateOrAddBankDetails(companyId, bankDetails);
     }
 
-    @DeleteMapping("/{companyId}/bankdetails/{bankDetailsId}")
+    @DeleteMapping("/{companyId}/bank-details/{bankDetailsId}")
     public String removeBankDetails(@PathVariable Long companyId,
                                     @PathVariable Long bankDetailsId) {
         return companyService.removeBankDetails(companyId, bankDetailsId);

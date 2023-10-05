@@ -10,7 +10,7 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
                 .allowedOriginPatterns("*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedMethods("GET", "POST", "PUT", "DELETE","PATCH")
                 .allowCredentials(true);
     }
 }

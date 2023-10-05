@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface PlantRepository extends JpaRepository<Plant, Long> {
     // Define custom query methods here
 
@@ -22,5 +24,7 @@ public interface PlantRepository extends JpaRepository<Plant, Long> {
     Page<Plant> findByCompanyIdAndNameContainingIgnoreCase(Long companyId, String keyword, Pageable pageable);
 
     Page<Plant> findByCompanyId(Long companyId, Pageable pageable);
+    List<Plant> findByCompanyId(Long companyId);
+    List<Plant> findByCompanyIdAndNameContainingIgnoreCase(Long companyId, String keyword);
 
 }

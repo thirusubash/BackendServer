@@ -1,27 +1,44 @@
-2023-09-13T06:22:52.476+05:30  INFO 24824 --- [main] com.gksvp.web.WebApplicationTests        : Starting WebApplicationTests using Java 17.0.8 with PID 24824 (started by thiru in C:\Users\thiru\IdeaProjects\Github\web)
-2023-09-13T06:22:52.481+05:30 DEBUG 24824 --- [main] com.gksvp.web.WebApplicationTests        : Running with Spring Boot v3.1.3, Spring v6.0.11
-2023-09-13T06:22:52.482+05:30  INFO 24824 --- [main] com.gksvp.web.WebApplicationTests        : No active profile set, falling back to 1 default profile: "default"
-2023-09-13T06:22:53.609+05:30  INFO 24824 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-09-13T06:22:53.697+05:30  INFO 24824 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 75 ms. Found 13 JPA repository interfaces.
-2023-09-13T06:22:54.319+05:30  INFO 24824 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-09-13T06:22:54.396+05:30  INFO 24824 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.7.Final
-2023-09-13T06:22:54.400+05:30  INFO 24824 --- [main] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
-2023-09-13T06:22:54.658+05:30  INFO 24824 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2023-09-13T06:22:54.831+05:30  INFO 24824 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2023-09-13T06:22:54.850+05:30  INFO 24824 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2023-09-13T06:22:54.949+05:30  WARN 24824 --- [main] c.zaxxer.hikari.util.DriverDataSource    : Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
-2023-09-13T06:22:55.318+05:30  INFO 24824 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@23a78c77
-2023-09-13T06:22:55.321+05:30  INFO 24824 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2023-09-13T06:22:55.801+05:30  WARN 24824 --- [main] o.s.w.c.s.GenericWebApplicationContext   : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Cannot invoke "org.hibernate.mapping.ToOne.getReferencedEntityName()" because "toOne" is null
-2023-09-13T06:22:55.801+05:30  INFO 24824 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2023-09-13T06:22:55.829+05:30  INFO 24824 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2023-09-13T06:22:55.843+05:30  INFO 24824 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+2023-09-29T06:43:38.760+05:30  INFO 15140 --- [main] com.gksvp.web.WebApplicationTests        : Starting WebApplicationTests using Java 20.0.2 with PID 15140 (started by thiru in C:\Users\thiru\IdeaProjects\Github\web)
+2023-09-29T06:43:38.767+05:30 DEBUG 15140 --- [main] com.gksvp.web.WebApplicationTests        : Running with Spring Boot v3.1.3, Spring v6.0.11
+2023-09-29T06:43:38.768+05:30  INFO 15140 --- [main] com.gksvp.web.WebApplicationTests        : No active profile set, falling back to 1 default profile: "default"
+2023-09-29T06:43:40.041+05:30  INFO 15140 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-09-29T06:43:40.151+05:30  INFO 15140 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 104 ms. Found 20 JPA repository interfaces.
+2023-09-29T06:43:40.862+05:30  INFO 15140 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-29T06:43:40.955+05:30  INFO 15140 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.7.Final
+2023-09-29T06:43:40.959+05:30  INFO 15140 --- [main] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-09-29T06:43:41.236+05:30  INFO 15140 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-09-29T06:43:41.408+05:30  INFO 15140 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-09-29T06:43:41.430+05:30  INFO 15140 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-09-29T06:43:41.998+05:30  INFO 15140 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@50f05307
+2023-09-29T06:43:42.001+05:30  INFO 15140 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-09-29T06:43:42.678+05:30  INFO 15140 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-09-29T06:43:43.871+05:30  INFO 15140 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-29T06:43:44.103+05:30  WARN 15140 --- [main] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table company_group add column id bigint not null auto_increment" via JDBC [Incorrect table definition; there can be only one auto column and it must be defined as a key]
 
-Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2023-09-13T06:22:55.870+05:30 ERROR 24824 --- [main] o.s.boot.SpringApplication               : Application run failed
-
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Cannot invoke "org.hibernate.mapping.ToOne.getReferencedEntityName()" because "toOne" is null
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1770) ~[spring-beans-6.0.11.jar:6.0.11]
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table company_group add column id bigint not null auto_increment" via JDBC [Incorrect table definition; there can be only one auto column and it must be defined as a key]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:92) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:574) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:514) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.migrateTable(AbstractSchemaMigrator.java:333) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:84) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:232) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:117) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:284) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:143) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at java.base/java.util.HashMap.forEach(HashMap.java:1429) ~[na:na]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:140) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:292) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:431) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1455) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75) ~[spring-orm-6.0.11.jar:6.0.11]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376) ~[spring-orm-6.0.11.jar:6.0.11]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.0.11.jar:6.0.11]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.0.11.jar:6.0.11]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352) ~[spring-orm-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766) ~[spring-beans-6.0.11.jar:6.0.11]
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.0.11.jar:6.0.11]
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.11.jar:6.0.11]
 	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.0.11.jar:6.0.11]
@@ -116,18 +133,35 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.0.0.jar:3.0.0]
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.0.0.jar:3.0.0]
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.0.0.jar:3.0.0]
-Caused by: java.lang.NullPointerException: Cannot invoke "org.hibernate.mapping.ToOne.getReferencedEntityName()" because "toOne" is null
-	at org.hibernate.boot.model.internal.BinderHelper.checkMappedByType(BinderHelper.java:1088) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.boot.model.internal.CollectionBinder.isReversePropertyInJoin(CollectionBinder.java:1571) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.boot.model.internal.CollectionBinder.noAssociationTable(CollectionBinder.java:1582) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.boot.model.internal.CollectionBinder.bindStarToManySecondPass(CollectionBinder.java:1543) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.boot.model.internal.CollectionBinder$1.secondPass(CollectionBinder.java:1534) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.boot.model.internal.CollectionSecondPass.doSecondPass(CollectionSecondPass.java:45) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.processSecondPasses(InFlightMetadataCollectorImpl.java:1857) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.processSecondPasses(InFlightMetadataCollectorImpl.java:1814) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:328) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1380) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1451) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+Caused by: java.sql.SQLSyntaxErrorException: Incorrect table definition; there can be only one auto column and it must be defined as a key
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121) ~[mysql-connector-j-8.1.0.jar:8.1.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.1.0.jar:8.1.0]
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:763) ~[mysql-connector-j-8.1.0.jar:8.1.0]
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:648) ~[mysql-connector-j-8.1.0.jar:8.1.0]
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java) ~[HikariCP-5.0.1.jar:na]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:78) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	... 116 common frames omitted
+
+2023-09-29T06:43:44.128+05:30  WARN 15140 --- [main] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table company_role add column id bigint not null auto_increment" via JDBC [Incorrect table definition; there can be only one auto column and it must be defined as a key]
+
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table company_role add column id bigint not null auto_increment" via JDBC [Incorrect table definition; there can be only one auto column and it must be defined as a key]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:92) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:574) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:514) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.migrateTable(AbstractSchemaMigrator.java:333) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:84) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:232) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:117) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:284) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:143) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at java.base/java.util.HashMap.forEach(HashMap.java:1429) ~[na:na]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:140) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:292) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:431) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1455) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
 	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75) ~[spring-orm-6.0.11.jar:6.0.11]
 	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376) ~[spring-orm-6.0.11.jar:6.0.11]
 	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.0.11.jar:6.0.11]
@@ -135,12 +169,27 @@ Caused by: java.lang.NullPointerException: Cannot invoke "org.hibernate.mapping.
 	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352) ~[spring-orm-6.0.11.jar:6.0.11]
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-6.0.11.jar:6.0.11]
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766) ~[spring-beans-6.0.11.jar:6.0.11]
-	... 94 common frames omitted
-
-2023-09-13T06:22:55.888+05:30 ERROR 24824 --- [main] o.s.test.context.TestContextManager      : Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener] to prepare test instance [com.gksvp.web.WebApplicationTests@5bdb6ea8]
-
-java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@7074da1d testClass = com.gksvp.web.WebApplicationTests, locations = [], classes = [com.gksvp.web.WebApplication], contextInitializerClasses = [], activeProfiles = [], propertySourceLocations = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@14dd7b39, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@51891008, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@69ee81fc, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@2438dcd, org.springframework.boot.test.context.SpringBootTestAnnotation@bea04389], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
-	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:143) ~[spring-test-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.0.11.jar:6.0.11]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1155) ~[spring-context-6.0.11.jar:6.0.11]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:932) ~[spring-context-6.0.11.jar:6.0.11]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:608) ~[spring-context-6.0.11.jar:6.0.11]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:436) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:312) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137) ~[spring-boot-test-3.1.3.jar:3.1.3]
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58) ~[spring-core-6.0.11.jar:6.0.11]
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46) ~[spring-core-6.0.11.jar:6.0.11]
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1406) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:545) ~[spring-boot-test-3.1.3.jar:3.1.3]
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137) ~[spring-boot-test-3.1.3.jar:3.1.3]
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108) ~[spring-boot-test-3.1.3.jar:3.1.3]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:187) ~[spring-test-6.0.11.jar:6.0.11]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:119) ~[spring-test-6.0.11.jar:6.0.11]
 	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:127) ~[spring-test-6.0.11.jar:6.0.11]
 	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:191) ~[spring-test-6.0.11.jar:6.0.11]
 	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:130) ~[spring-test-6.0.11.jar:6.0.11]
@@ -214,48 +263,66 @@ java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMerge
 	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.0.0.jar:3.0.0]
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.0.0.jar:3.0.0]
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.0.0.jar:3.0.0]
-Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Cannot invoke "org.hibernate.mapping.ToOne.getReferencedEntityName()" because "toOne" is null
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1770) ~[spring-beans-6.0.11.jar:6.0.11]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.0.11.jar:6.0.11]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.11.jar:6.0.11]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.0.11.jar:6.0.11]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.11.jar:6.0.11]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.0.11.jar:6.0.11]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.0.11.jar:6.0.11]
-	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1155) ~[spring-context-6.0.11.jar:6.0.11]
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:932) ~[spring-context-6.0.11.jar:6.0.11]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:608) ~[spring-context-6.0.11.jar:6.0.11]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734) ~[spring-boot-3.1.3.jar:3.1.3]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:436) ~[spring-boot-3.1.3.jar:3.1.3]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:312) ~[spring-boot-3.1.3.jar:3.1.3]
-	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137) ~[spring-boot-test-3.1.3.jar:3.1.3]
-	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58) ~[spring-core-6.0.11.jar:6.0.11]
-	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46) ~[spring-core-6.0.11.jar:6.0.11]
-	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1406) ~[spring-boot-3.1.3.jar:3.1.3]
-	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:545) ~[spring-boot-test-3.1.3.jar:3.1.3]
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137) ~[spring-boot-test-3.1.3.jar:3.1.3]
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108) ~[spring-boot-test-3.1.3.jar:3.1.3]
-	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:187) ~[spring-test-6.0.11.jar:6.0.11]
-	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:119) ~[spring-test-6.0.11.jar:6.0.11]
-	... 73 common frames omitted
-Caused by: java.lang.NullPointerException: Cannot invoke "org.hibernate.mapping.ToOne.getReferencedEntityName()" because "toOne" is null
-	at org.hibernate.boot.model.internal.BinderHelper.checkMappedByType(BinderHelper.java:1088) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.boot.model.internal.CollectionBinder.isReversePropertyInJoin(CollectionBinder.java:1571) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.boot.model.internal.CollectionBinder.noAssociationTable(CollectionBinder.java:1582) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.boot.model.internal.CollectionBinder.bindStarToManySecondPass(CollectionBinder.java:1543) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.boot.model.internal.CollectionBinder$1.secondPass(CollectionBinder.java:1534) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.boot.model.internal.CollectionSecondPass.doSecondPass(CollectionSecondPass.java:45) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.processSecondPasses(InFlightMetadataCollectorImpl.java:1857) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.processSecondPasses(InFlightMetadataCollectorImpl.java:1814) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:328) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1380) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1451) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75) ~[spring-orm-6.0.11.jar:6.0.11]
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376) ~[spring-orm-6.0.11.jar:6.0.11]
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.0.11.jar:6.0.11]
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.0.11.jar:6.0.11]
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352) ~[spring-orm-6.0.11.jar:6.0.11]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-6.0.11.jar:6.0.11]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766) ~[spring-beans-6.0.11.jar:6.0.11]
-	... 94 common frames omitted
+Caused by: java.sql.SQLSyntaxErrorException: Incorrect table definition; there can be only one auto column and it must be defined as a key
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121) ~[mysql-connector-j-8.1.0.jar:8.1.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.1.0.jar:8.1.0]
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:763) ~[mysql-connector-j-8.1.0.jar:8.1.0]
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:648) ~[mysql-connector-j-8.1.0.jar:8.1.0]
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java) ~[HikariCP-5.0.1.jar:na]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:78) ~[hibernate-core-6.2.7.Final.jar:6.2.7.Final]
+	... 116 common frames omitted
 
+2023-09-29T06:43:44.582+05:30  INFO 15140 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-09-29T06:43:45.239+05:30  INFO 15140 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-09-29T06:43:47.362+05:30  WARN 15140 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-09-29T06:43:47.535+05:30  INFO 15140 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@aca8cae, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1cca09bc, org.springframework.security.web.context.SecurityContextHolderFilter@476fc8a1, org.springframework.security.web.header.HeaderWriterFilter@43f13160, org.springframework.security.web.csrf.CsrfFilter@71ebb8e1, org.springframework.security.web.authentication.logout.LogoutFilter@2aecd5a4, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@14c05ad9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@18e0c618, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@642bfa5e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2b749404, org.springframework.security.web.access.ExceptionTranslationFilter@73131043, org.springframework.security.web.access.intercept.AuthorizationFilter@26781ebb]
+2023-09-29T06:43:47.551+05:30  WARN 15140 --- [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/register']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-09-29T06:43:47.551+05:30  INFO 15140 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/register']
+2023-09-29T06:43:47.551+05:30  WARN 15140 --- [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/authenticate']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-09-29T06:43:47.552+05:30  INFO 15140 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/authenticate']
+2023-09-29T06:43:47.552+05:30  WARN 15140 --- [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/roles']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-09-29T06:43:47.552+05:30  INFO 15140 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/roles']
+2023-09-29T06:43:47.552+05:30  WARN 15140 --- [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/groups']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-09-29T06:43:47.552+05:30  INFO 15140 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/groups']
+2023-09-29T06:43:47.552+05:30  WARN 15140 --- [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-09-29T06:43:47.552+05:30  INFO 15140 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/**']
+2023-09-29T06:43:48.644+05:30  INFO 15140 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-09-29T06:43:48.749+05:30  INFO 15140 --- [main] com.gksvp.web.WebApplicationTests        : Started WebApplicationTests in 10.403 seconds (process running for 11.664)
+2023-09-29T06:43:49.434+05:30  INFO 15140 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-09-29T06:43:49.437+05:30  INFO 15140 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-09-29T06:43:49.448+05:30  INFO 15140 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-09-29T06:45:03.363+05:30  INFO 16980 --- [main] com.gksvp.web.WebApplicationTests        : Starting WebApplicationTests using Java 20.0.2 with PID 16980 (started by thiru in C:\Users\thiru\IdeaProjects\Github\web)
+2023-09-29T06:45:03.364+05:30 DEBUG 16980 --- [main] com.gksvp.web.WebApplicationTests        : Running with Spring Boot v3.1.3, Spring v6.0.11
+2023-09-29T06:45:03.365+05:30  INFO 16980 --- [main] com.gksvp.web.WebApplicationTests        : No active profile set, falling back to 1 default profile: "default"
+2023-09-29T06:45:04.625+05:30  INFO 16980 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-09-29T06:45:04.756+05:30  INFO 16980 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 121 ms. Found 20 JPA repository interfaces.
+2023-09-29T06:45:05.466+05:30  INFO 16980 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-29T06:45:05.537+05:30  INFO 16980 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.7.Final
+2023-09-29T06:45:05.540+05:30  INFO 16980 --- [main] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-09-29T06:45:05.813+05:30  INFO 16980 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-09-29T06:45:05.991+05:30  INFO 16980 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-09-29T06:45:06.011+05:30  INFO 16980 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-09-29T06:45:06.592+05:30  INFO 16980 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@688d619c
+2023-09-29T06:45:06.595+05:30  INFO 16980 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-09-29T06:45:07.211+05:30  INFO 16980 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-09-29T06:45:08.275+05:30  INFO 16980 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-29T06:45:09.846+05:30  INFO 16980 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-09-29T06:45:10.467+05:30  INFO 16980 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-09-29T06:45:12.345+05:30  WARN 16980 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-09-29T06:45:12.506+05:30  INFO 16980 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3106efb9, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@477aa172, org.springframework.security.web.context.SecurityContextHolderFilter@2aa5a02e, org.springframework.security.web.header.HeaderWriterFilter@61e8fbfc, org.springframework.security.web.csrf.CsrfFilter@6616b9e0, org.springframework.security.web.authentication.logout.LogoutFilter@762f0a8b, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@adf9ab9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@8afd00e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@58178c5e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@52ed42d6, org.springframework.security.web.access.ExceptionTranslationFilter@619cdd5e, org.springframework.security.web.access.intercept.AuthorizationFilter@3b641567]
+2023-09-29T06:45:12.522+05:30  WARN 16980 --- [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/register']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-09-29T06:45:12.522+05:30  INFO 16980 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/register']
+2023-09-29T06:45:12.522+05:30  WARN 16980 --- [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/authenticate']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-09-29T06:45:12.522+05:30  INFO 16980 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/authenticate']
+2023-09-29T06:45:12.522+05:30  WARN 16980 --- [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/roles']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-09-29T06:45:12.522+05:30  INFO 16980 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/roles']
+2023-09-29T06:45:12.522+05:30  WARN 16980 --- [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/groups']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-09-29T06:45:12.522+05:30  INFO 16980 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/groups']
+2023-09-29T06:45:12.522+05:30  WARN 16980 --- [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-09-29T06:45:12.522+05:30  INFO 16980 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/**']
+2023-09-29T06:45:13.526+05:30  INFO 16980 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-09-29T06:45:13.626+05:30  INFO 16980 --- [main] com.gksvp.web.WebApplicationTests        : Started WebApplicationTests in 10.633 seconds (process running for 11.718)
+2023-09-29T06:45:14.355+05:30  INFO 16980 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-09-29T06:45:14.357+05:30  INFO 16980 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-09-29T06:45:14.367+05:30  INFO 16980 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

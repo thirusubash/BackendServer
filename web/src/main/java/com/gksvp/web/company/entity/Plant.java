@@ -1,6 +1,7 @@
 package com.gksvp.web.company.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.gksvp.web.products.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -64,12 +65,12 @@ public class Plant {
     @Column(name = "regulations_compliance")
     private String regulationsCompliance;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JsonIgnoreProperties({"plants", "employees"})
     private Company company;
 
     @OneToMany(mappedBy = "plant", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties({"plant","company"})
+    @JsonIgnoreProperties({"plant","company","employees"})
     private List<Employee> employees;
 
     @CreatedDate
@@ -80,4 +81,7 @@ public class Plant {
     @Column(name = "last_modified_date", nullable = false)
     private Date lastModifiedDate;
 
+    @OneToMany(mappedBy = "plant")
+    @JsonIgnoreProperties({"plant","company","products"})
+    private List<Product> products;
 }

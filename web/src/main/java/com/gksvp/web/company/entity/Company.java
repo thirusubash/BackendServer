@@ -1,10 +1,9 @@
 package com.gksvp.web.company.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.gksvp.web.products.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -42,7 +41,8 @@ public class Company {
     private String insuranceInformation;
     private String tradeLicenseNumber;
     private String healthPermitNumber;
-
+    private String gstin;
+    private String tin;
     private Boolean status;
 
     @CreatedDate
@@ -79,6 +79,18 @@ public class Company {
     @OneToMany(cascade = CascadeType.ALL)
     @JsonIgnoreProperties("company")
     private Set<BankDetails> bankAccounts = new HashSet<>();
+
+    @OneToMany(mappedBy = "company")
+    private List<Product> products;
+
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    private List<Designation> designations;
+
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    private List<CompanyRole> roles;
+
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    private List<CompanyGroup> groups;
 
 }
 

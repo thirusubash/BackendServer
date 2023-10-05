@@ -64,6 +64,6 @@ public class CompanyAddress {
     private LocalDateTime lastModifiedDate;
 
     @ManyToOne
-    @JsonIgnoreProperties("companyAddresses")
+    @JsonIgnoreProperties({"companyAddresses","products","plants","employees","bankAccounts","suppliers","locations"})
     private Company company;
 }
