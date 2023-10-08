@@ -1,14 +1,16 @@
 package com.gksvp.web.homepage.controller;
 
+import com.gksvp.web.homepage.dto.HomePageDTO;
 import com.gksvp.web.homepage.entity.Homepage;
 import com.gksvp.web.homepage.service.HomePageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -40,11 +42,43 @@ public class HomePageController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Homepage>> getAllHomepages() {
-        List<Homepage> homepages = homePageService.getAllHomepages();
+    public ResponseEntity<Page<HomePageDTO>> getAllHomepages(@PageableDefault(size = 10) Pageable pageable) {
+        Page<HomePageDTO> homepages = homePageService.getAllHomepages(pageable);
         return new ResponseEntity<>(homepages, HttpStatus.OK);
     }
 
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<Homepage>> getAllHomepagesWithPage(
+            @PageableDefault Pageable pageable,
+            @RequestParam(required = false) String search) {
+        Page<Homepage> homepages=homePageService.getAllPageableHomepages(pageable, search);
+        return new ResponseEntity<>(homepages, HttpStatus.OK);
+    }
+
+    @PatchMapping("/add-image")
+    public ResponseEntity<Homepage> addImage(
+            @RequestParam Integer id,
+            @RequestParam String image) {
+        Homepage homepage = homePageService.addImage(id, image);
+        return ResponseEntity.ok(homepage);
+    }
+
+    @PatchMapping("/remove-image")
+    public ResponseEntity<Homepage> removeImage(
+            @RequestParam Integer id,
+            @RequestParam String image) {
+        Homepage homepage = homePageService.removeImage(id, image);
+        return ResponseEntity.ok(homepage);
+    }
+
+    @PatchMapping("/status")
+    public ResponseEntity<Homepage> updateVisibility(
+            @RequestParam Integer id,
+            @RequestParam Boolean isVisibility) {
+        Homepage homepage = homePageService.updateVisibility(id, isVisibility); // Assuming the method is present in HomePageService
+        return ResponseEntity.ok(homepage);
+    }
     @PutMapping("/{id}")
     public ResponseEntity<Homepage> updateHomepage(@PathVariable Integer id, @RequestBody Homepage homepage) {
         Homepage updatedHomepage = homePageService.updateHomepage(id, homepage);
@@ -61,30 +95,7 @@ public class HomePageController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/{id}/images")
-    public ResponseEntity<Void> addImages(@PathVariable Integer id, @RequestParam("images") MultipartFile[] images) {
-        try {
-            boolean imagesAdded = homePageService.addImages(id, images);
-            if (imagesAdded) {
-                return new ResponseEntity<>(HttpStatus.CREATED);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        } catch (IOException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
-    @DeleteMapping("/{id}/images/{imageId}")
-    public ResponseEntity<Void> removeImages(
-            @PathVariable Integer id,
-            @PathVariable String imageId,
-            @RequestParam(name = "softDelete", defaultValue = "false") boolean softDelete) {
-        boolean imagesRemoved = homePageService.removeImages(id, imageId, softDelete);
-        if (imagesRemoved) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+
+
 }

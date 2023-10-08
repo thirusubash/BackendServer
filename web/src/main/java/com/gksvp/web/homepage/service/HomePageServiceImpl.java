@@ -1,98 +1,114 @@
 package com.gksvp.web.homepage.service;
 
+import com.gksvp.web.homepage.dto.HomePageDTO;
 import com.gksvp.web.homepage.entity.Homepage;
 import com.gksvp.web.homepage.repository.HomepageRepository;
-import com.gksvp.web.media.entity.BlobImage;
 import com.gksvp.web.media.service.BlobImageService;
+import io.micrometer.common.util.StringUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
-
+import java.util.Optional;
+import java.util.stream.Collectors;
+import com.gksvp.web.homepage.service.HomePageSpecification;
 @Service
 public class HomePageServiceImpl implements HomePageService {
 
     private final HomepageRepository homepageRepository;
-    private final BlobImageService blobImageService;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public HomePageServiceImpl(HomepageRepository homepageRepository, BlobImageService blobImageService) {
+    public HomePageServiceImpl(HomepageRepository homepageRepository, BlobImageService blobImageService, ModelMapper modelMapper) {
         this.homepageRepository = homepageRepository;
-        this.blobImageService = blobImageService;
+        this.modelMapper = modelMapper;
     }
 
     @Override
     public Homepage createHomepage(Homepage homepage) {
-        // Implement the logic to create a homepage
         return homepageRepository.save(homepage);
     }
 
     @Override
     public Homepage getHomepageById(Integer id) {
-        // Implement the logic to retrieve a homepage by ID
         return homepageRepository.findById(id).orElse(null);
     }
 
     @Override
-    public List<Homepage> getAllHomepages() {
-        // Implement the logic to retrieve all homepages
-        return homepageRepository.findAll();
-    }
-
-    @Override
     public Homepage updateHomepage(Integer id, Homepage homepage) {
-        // Implement the logic to update a homepage
-        return homepageRepository.save(homepage);
+        if(homepageRepository.existsById(id)) {
+            return homepageRepository.save(homepage);
+        } else {
+            return null;  // or you can throw an exception
+        }
     }
 
     @Override
     public void deleteHomepage(Integer id) {
-        // Implement the logic to delete a homepage by ID
         homepageRepository.deleteById(id);
     }
 
     @Override
-    @Transactional
-    public boolean addImages(Integer id, MultipartFile[] images) throws IOException {
-        Homepage homepage = homepageRepository.findById(id).orElse(null);
-        if (homepage != null) {
-            for (MultipartFile image : images) {
-                // Store the image using BlobImageService
-                BlobImage blobImage = blobImageService.storeImage(image, "Home Page");
+    public Page<HomePageDTO> getAllHomepages(Pageable pageable) {
+        Specification<Homepage> specification = Specification.where(HomePageSpecification.isVisible());
 
-                // Add the UUID to the homepage's uuids list
-                homepage.getUuids().add(blobImage.getId().toString());
-            }
-            // Update the homepage in the database
-            homepageRepository.save(homepage);
+        Page<Homepage> homepages = homepageRepository.findAll(specification, pageable);
 
-            return true; // Images were successfully added
-        }
-        return false; // Homepage with the given ID does not exist
+        return homepages.map(homepage -> modelMapper.map(homepage, HomePageDTO.class));
     }
 
 
     @Override
-    @Transactional
-    public boolean removeImages(Integer id, String imageId, boolean softDelete) {
-        Homepage homepage = homepageRepository.findById(id).orElse(null);
-        if (homepage != null) {
-            if (softDelete) {
-                // Assuming you want to remove the image UUID from the homepage's uuids list
-                homepage.getUuids().remove(imageId);
-            } else {
-                // Implement the logic to delete the image (you can add this logic here)
-                // Assuming you want to remove the image UUID from the homepage's uuids list as well
-                homepage.getUuids().remove(imageId);
-                blobImageService.deleteImage(UUID.fromString(imageId));
-
-            }
-            return true; // Return true if the image was successfully removed.
+    public Page<Homepage> getAllPageableHomepages(Pageable pageable, String searchTerm) {
+        if(StringUtils.isBlank(searchTerm)) {
+            return homepageRepository.findAll(pageable);
+        } else {
+            // Assuming you have a method in your repository to search by term
+            return homepageRepository.findByComplexSearch(searchTerm, searchTerm, pageable);
         }
-        return false;
+    }
+
+
+    @Override
+    public Homepage addImage(Integer id, String imageUrl) {
+        Optional<Homepage> homepageOpt = homepageRepository.findById(id);
+        if(homepageOpt.isPresent()) {
+            Homepage homepage = homepageOpt.get();
+            homepage.getImageUuids().add(imageUrl);
+            return homepageRepository.save(homepage);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Homepage removeImage(Integer id, String imageUrl) {
+        Optional<Homepage> homepageOpt = homepageRepository.findById(id);
+        if(homepageOpt.isPresent()) {
+            Homepage homepage = homepageOpt.get();
+            homepage.getImageUuids().remove(imageUrl);
+            return homepageRepository.save(homepage);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Homepage updateVisibility(Integer id, Boolean isVisibility) {
+        Optional<Homepage> homepageOpt = homepageRepository.findById(id);
+        if(homepageOpt.isPresent()) {
+            Homepage homepage = homepageOpt.get();
+            // Assuming you added a setter for `isVisible` in Homepage entity.
+            homepage.setVisible(isVisibility);
+            return homepageRepository.save(homepage);
+        } else {
+            return null;
+        }
     }
 }
