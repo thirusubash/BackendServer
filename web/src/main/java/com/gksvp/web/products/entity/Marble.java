@@ -21,28 +21,28 @@ import java.time.LocalDateTime;
 public class Marble extends Product {
 
     @Column(name = "marble_type")
-    private String type;  // e.g., Italian, Granite, etc.
+    private String type;
 
     @Column(name = "finish")
-    private String finish;  // e.g., Polished, Honed, etc.
+    private String finish;
 
     @Column(name = "origin")
-    private String origin;  // e.g., Italy, Spain, India, etc.
+    private String origin;
 
     @Column(name = "pattern")
-    private String pattern;  // e.g., Veined, Flecked, etc.
+    private String pattern;
 
     @Column(name = "thickness")
-    private Double thickness;  // e.g., 20mm, 30mm, etc.
+    private Double thickness;
 
     @Column(name = "application")
-    private String application;  // e.g., Flooring, Countertops, Wall cladding, etc.
+    private String application;
 
     @Column(name = "durability")
-    private String durability;  // e.g., High, Medium, Low
+    private String durability;
 
     @Column(name = "porosity")
-    private String porosity;  // e.g., Porous, Less Porous, Non-porous
+    private String porosity;
 
     @Column(name = "manufacturing_date")
     private LocalDateTime manufacturingDate;
@@ -54,10 +54,7 @@ public class Marble extends Product {
     private String polishingMaterial;
 
     @Column(name = "natural_material")
-    private String naturalMaterial;  // e.g., Quartz, Feldspar, etc.
-
-    @Column(name = "orgin")
-    private String orgin;
+    private String naturalMaterial;
 
     @CreatedBy
     @Column(name = "created_by")
@@ -75,5 +72,5 @@ public class Marble extends Product {
     @Column(name = "last_modified_date")
     private LocalDateTime lastModifiedDate;
 
-    // Constructors, getters, setters, and other methods if needed.
+    // Other methods if needed.
 }

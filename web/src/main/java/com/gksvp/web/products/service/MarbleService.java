@@ -1,6 +1,8 @@
 package com.gksvp.web.products.service;
 
+import com.gksvp.web.products.dto.MarbleDTO;
 import com.gksvp.web.products.entity.Marble;
+import io.micrometer.core.instrument.binder.db.MetricsDSLContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -21,5 +23,7 @@ public interface MarbleService {
 
     Page<Marble> getCompanyMarbles(Long companyId, String searchTerm, Pageable pageable);
 
+
+    Page<MarbleDTO> fetchActiveProduct(Pageable pageable, String searchKeyword);
 
 }

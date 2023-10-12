@@ -1,5 +1,6 @@
 package com.gksvp.web.products.controller;
 
+import com.gksvp.web.products.dto.MarbleDTO;
 import com.gksvp.web.products.entity.Marble;
 import com.gksvp.web.products.service.MarbleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,4 +90,17 @@ public class MarbleController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    // Get marble by isVisibleToUsers
+    @GetMapping("/active-product")
+    public ResponseEntity<Page<MarbleDTO>> fetchActiveProduct(Pageable pageable, String searchKeyword) {
+        Page<MarbleDTO> result = marbleService.fetchActiveProduct(pageable, searchKeyword);
+
+        if (result != null && !result.isEmpty()) {
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
