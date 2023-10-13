@@ -1,0 +1,115 @@
+2023-10-13T10:42:49.001+05:30  INFO 7576 --- [restartedMain] com.gksvp.web.WebApplication             : Starting WebApplication using Java 17.0.8 with PID 7576 (C:\Users\thiru\IdeaProjects\Github\web\target\classes started by thiru in C:\Users\thiru\IdeaProjects\Github)
+2023-10-13T10:42:49.004+05:30 DEBUG 7576 --- [restartedMain] com.gksvp.web.WebApplication             : Running with Spring Boot v3.1.3, Spring v6.0.11
+2023-10-13T10:42:49.007+05:30  INFO 7576 --- [restartedMain] com.gksvp.web.WebApplication             : No active profile set, falling back to 1 default profile: "default"
+2023-10-13T10:42:49.108+05:30  INFO 7576 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-10-13T10:42:49.108+05:30  INFO 7576 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-10-13T10:42:50.777+05:30  INFO 7576 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-10-13T10:42:50.988+05:30  INFO 7576 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 201 ms. Found 22 JPA repository interfaces.
+2023-10-13T10:42:52.226+05:30  INFO 7576 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (https)
+2023-10-13T10:42:52.244+05:30  INFO 7576 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-10-13T10:42:52.245+05:30  INFO 7576 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.12]
+2023-10-13T10:42:52.360+05:30  INFO 7576 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-10-13T10:42:52.361+05:30  INFO 7576 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3251 ms
+2023-10-13T10:42:52.734+05:30  INFO 7576 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-10-13T10:42:52.852+05:30  INFO 7576 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.7.Final
+2023-10-13T10:42:52.857+05:30  INFO 7576 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-10-13T10:42:53.088+05:30  INFO 7576 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-13T10:42:53.287+05:30  INFO 7576 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-10-13T10:42:53.311+05:30  INFO 7576 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-10-13T10:42:53.848+05:30  INFO 7576 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7989224
+2023-10-13T10:42:53.854+05:30  INFO 7576 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-10-13T10:42:54.671+05:30  INFO 7576 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-13T10:42:56.243+05:30  INFO 7576 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-10-13T10:42:58.038+05:30  INFO 7576 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-10-13T10:42:58.554+05:30  INFO 7576 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-10-13T10:43:00.344+05:30 DEBUG 7576 --- [restartedMain] c.gksvp.web.security.JwtRequestFilter    : Filter 'jwtRequestFilter' configured for use
+2023-10-13T10:43:01.627+05:30  WARN 7576 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-10-13T10:43:01.776+05:30  INFO 7576 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5a2f07be, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@53e5cb9e, org.springframework.security.web.context.SecurityContextHolderFilter@2b6c4224, org.springframework.security.web.header.HeaderWriterFilter@39a81170, org.springframework.security.web.csrf.CsrfFilter@18c4d04e, org.springframework.security.web.authentication.logout.LogoutFilter@243bb0f7, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@2d248ce1, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2aef2e96, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@55943d2d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@47e8e4e, org.springframework.security.web.access.ExceptionTranslationFilter@655f01df, org.springframework.security.web.access.intercept.AuthorizationFilter@3f3ed462]
+2023-10-13T10:43:02.204+05:30  INFO 7576 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-10-13T10:43:02.223+05:30  WARN 7576 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Mvc [pattern='/register']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-10-13T10:43:02.224+05:30  INFO 7576 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Mvc [pattern='/register']
+2023-10-13T10:43:02.226+05:30  WARN 7576 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Mvc [pattern='/authenticate']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-10-13T10:43:02.228+05:30  INFO 7576 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Mvc [pattern='/authenticate']
+2023-10-13T10:43:02.228+05:30  WARN 7576 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Mvc [pattern='/roles']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-10-13T10:43:02.228+05:30  INFO 7576 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Mvc [pattern='/roles']
+2023-10-13T10:43:02.228+05:30  WARN 7576 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Mvc [pattern='/groups']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-10-13T10:43:02.228+05:30  INFO 7576 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Mvc [pattern='/groups']
+2023-10-13T10:43:02.228+05:30  WARN 7576 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Mvc [pattern='/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-10-13T10:43:02.228+05:30  INFO 7576 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Mvc [pattern='/**']
+2023-10-13T10:43:02.810+05:30  INFO 7576 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-10-13T10:43:02.991+05:30  INFO 7576 --- [restartedMain] o.a.t.util.net.NioEndpoint.certificate   : Connector [https-jsse-nio-8081], TLS virtual host [_default_], certificate type [UNDEFINED] configured from keystore [C:\Users\thiru\.keystore] using alias [gksvp] with trust store [null]
+2023-10-13T10:43:03.023+05:30  INFO 7576 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (https) with context path ''
+2023-10-13T10:43:03.047+05:30  INFO 7576 --- [restartedMain] com.gksvp.web.WebApplication             : Started WebApplication in 14.651 seconds (process running for 15.496)
+2023-10-13T10:43:04.145+05:30  INFO 7576 --- [RMI TCP Connection(2)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-10-13T10:43:04.146+05:30  INFO 7576 --- [RMI TCP Connection(2)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-10-13T10:43:04.148+05:30  INFO 7576 --- [RMI TCP Connection(2)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-10-13T10:43:25.818+05:30  INFO 7576 --- [https-jsse-nio-8081-exec-6] c.gksvp.web.security.JwtRequestFilter    : Token header from JwtRequestFilter: null
+2023-10-13T10:43:25.818+05:30  WARN 7576 --- [https-jsse-nio-8081-exec-6] c.gksvp.web.security.JwtRequestFilter    : JWT Token does not begin with Bearer String
+2023-10-13T10:43:26.238+05:30  INFO 7576 --- [https-jsse-nio-8081-exec-7] c.gksvp.web.security.JwtRequestFilter    : Token header from JwtRequestFilter: null
+2023-10-13T10:43:26.238+05:30  WARN 7576 --- [https-jsse-nio-8081-exec-7] c.gksvp.web.security.JwtRequestFilter    : JWT Token does not begin with Bearer String
+2023-10-13T10:46:33.147+05:30  INFO 7576 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+2023-10-13T10:46:33.167+05:30  INFO 7576 --- [Thread-5] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-10-13T10:46:33.169+05:30  INFO 7576 --- [Thread-5] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2023-10-13T10:46:33.172+05:30  WARN 7576 --- [Thread-5] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-1 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17.0.8/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17.0.8/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+ java.base@17.0.8/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+ java.base@17.0.8/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+ java.base@17.0.8/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base@17.0.8/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+ java.base@17.0.8/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17.0.8/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17.0.8/java.lang.Thread.run(Thread.java:833)
+2023-10-13T10:46:33.186+05:30  INFO 7576 --- [Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-10-13T10:46:33.193+05:30  INFO 7576 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-10-13T10:46:33.207+05:30  INFO 7576 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-10-13T10:46:33.395+05:30  INFO 7576 --- [restartedMain] com.gksvp.web.WebApplication             : Starting WebApplication using Java 17.0.8 with PID 7576 (C:\Users\thiru\IdeaProjects\Github\web\target\classes started by thiru in C:\Users\thiru\IdeaProjects\Github)
+2023-10-13T10:46:33.398+05:30 DEBUG 7576 --- [restartedMain] com.gksvp.web.WebApplication             : Running with Spring Boot v3.1.3, Spring v6.0.11
+2023-10-13T10:46:33.399+05:30  INFO 7576 --- [restartedMain] com.gksvp.web.WebApplication             : No active profile set, falling back to 1 default profile: "default"
+2023-10-13T10:46:33.913+05:30  INFO 7576 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-10-13T10:46:34.027+05:30  INFO 7576 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 112 ms. Found 22 JPA repository interfaces.
+2023-10-13T10:46:34.173+05:30  WARN 7576 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2023-10-13T10:46:34.181+05:30  INFO 7576 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-10-13T10:46:34.239+05:30 ERROR 7576 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.context.ApplicationContextException: Unable to start web server
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:164) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:602) ~[spring-context-6.0.11.jar:6.0.11]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:436) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:312) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.3.jar:3.1.3]
+	at com.gksvp.web.WebApplication.main(WebApplication.java:16) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.1.3.jar:3.1.3]
+Caused by: java.lang.IllegalStateException: Could not load store: Unable to create key store: Could not load store from 'classpath:keystore.jks'
+	at org.springframework.boot.web.embedded.tomcat.SslConnectorCustomizer.configureSslStoreProvider(SslConnectorCustomizer.java:124) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.web.embedded.tomcat.SslConnectorCustomizer.configureSsl(SslConnectorCustomizer.java:93) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.web.embedded.tomcat.SslConnectorCustomizer.customize(SslConnectorCustomizer.java:59) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.customizeSsl(TomcatServletWebServerFactory.java:367) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.customizeConnector(TomcatServletWebServerFactory.java:344) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:203) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:183) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:161) ~[spring-boot-3.1.3.jar:3.1.3]
+	... 13 common frames omitted
+Caused by: java.lang.IllegalStateException: Unable to create key store: Could not load store from 'classpath:keystore.jks'
+	at org.springframework.boot.ssl.jks.JksSslStoreBundle.createKeyStore(JksSslStoreBundle.java:89) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.ssl.jks.JksSslStoreBundle.getKeyStore(JksSslStoreBundle.java:58) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.web.embedded.tomcat.SslConnectorCustomizer.configureSslStoreProvider(SslConnectorCustomizer.java:116) ~[spring-boot-3.1.3.jar:3.1.3]
+	... 20 common frames omitted
+Caused by: java.lang.IllegalStateException: Could not load store from 'classpath:keystore.jks'
+	at org.springframework.boot.ssl.jks.JksSslStoreBundle.loadKeyStore(JksSslStoreBundle.java:118) ~[spring-boot-3.1.3.jar:3.1.3]
+	at org.springframework.boot.ssl.jks.JksSslStoreBundle.createKeyStore(JksSslStoreBundle.java:84) ~[spring-boot-3.1.3.jar:3.1.3]
+	... 22 common frames omitted
+Caused by: java.io.FileNotFoundException: class path resource [keystore.jks] cannot be resolved to URL because it does not exist
+	at org.springframework.util.ResourceUtils.getURL(ResourceUtils.java:137) ~[spring-core-6.0.11.jar:6.0.11]
+	at org.springframework.boot.ssl.jks.JksSslStoreBundle.loadKeyStore(JksSslStoreBundle.java:112) ~[spring-boot-3.1.3.jar:3.1.3]
+	... 23 common frames omitted
+
