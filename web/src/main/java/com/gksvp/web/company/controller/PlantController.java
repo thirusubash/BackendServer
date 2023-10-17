@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/plants")
-@CrossOrigin(origins = "https://localhost:8080", allowCredentials = "true")
 public class PlantController {
     private final PlantService plantService;
 
@@ -21,8 +20,7 @@ public class PlantController {
     }
 
     @GetMapping
-    public Page<Plant> getAllPlants(Pageable pageable
-    ) {
+    public Page<Plant> getAllPlants(Pageable pageable) {
         return plantService.getAllPlants(pageable);
     }
 

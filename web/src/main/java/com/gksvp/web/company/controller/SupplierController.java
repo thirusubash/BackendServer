@@ -1,4 +1,5 @@
 package com.gksvp.web.company.controller;
+
 import com.gksvp.web.company.entity.Supplier;
 import com.gksvp.web.company.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/suppliers")
-@CrossOrigin(origins = "https://localhost:8080", allowCredentials = "true")
 public class SupplierController {
     private final SupplierService supplierService;
 

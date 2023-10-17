@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/product-catalogs")
-@CrossOrigin(origins = "https://localhost:8080", allowCredentials = "true")
 public class ProductCatalogController {
 
     private final ProductCatalogService productCatalogService;

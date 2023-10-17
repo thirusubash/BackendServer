@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/short-image")
-@CrossOrigin(origins = "https://localhost:8080", allowCredentials = "true")
 public class BlobImageController {
 
     private final BlobImageService blobImageService;
@@ -60,15 +59,16 @@ public class BlobImageController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id) {
         try {
             blobImageService.deleteImage(id);
             return ResponseEntity.ok().build(); // Return a 200 OK response on successful deletion
         } catch (Exception e) {
-            return ResponseEntity.notFound().build(); // Return a 404 Not Found response if the image is not found or if there's an error
+            return ResponseEntity.notFound().build(); // Return a 404 Not Found response if the image is not found or if
+                                                      // there's an error
         }
     }
-
 
 }

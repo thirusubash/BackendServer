@@ -24,7 +24,7 @@ RUN ls -la target/
 FROM eclipse-temurin:17-jre
 
 # Expose the port the app runs on
-EXPOSE 8081
+EXPOSE 443
 
 # Copy the packaged jar file from the builder stage into our production container
 COPY --from=builder /target/web-0.0.1-SNAPSHOT.jar /web-0.0.1-SNAPSHOT.jar

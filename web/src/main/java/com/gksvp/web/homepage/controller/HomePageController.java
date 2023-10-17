@@ -11,11 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/homepages")
-@CrossOrigin(origins = "https://localhost:8080", allowCredentials = "true")
 public class HomePageController {
 
     private final HomePageService homePageService;
@@ -47,12 +44,11 @@ public class HomePageController {
         return new ResponseEntity<>(homepages, HttpStatus.OK);
     }
 
-
     @GetMapping("/search")
     public ResponseEntity<Page<Homepage>> getAllHomepagesWithPage(
             @PageableDefault Pageable pageable,
             @RequestParam(required = false) String search) {
-        Page<Homepage> homepages=homePageService.getAllPageableHomepages(pageable, search);
+        Page<Homepage> homepages = homePageService.getAllPageableHomepages(pageable, search);
         return new ResponseEntity<>(homepages, HttpStatus.OK);
     }
 
@@ -76,9 +72,11 @@ public class HomePageController {
     public ResponseEntity<Homepage> updateVisibility(
             @RequestParam Integer id,
             @RequestParam Boolean isVisibility) {
-        Homepage homepage = homePageService.updateVisibility(id, isVisibility); // Assuming the method is present in HomePageService
+        Homepage homepage = homePageService.updateVisibility(id, isVisibility); // Assuming the method is present in
+                                                                                // HomePageService
         return ResponseEntity.ok(homepage);
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<Homepage> updateHomepage(@PathVariable Integer id, @RequestBody Homepage homepage) {
         Homepage updatedHomepage = homePageService.updateHomepage(id, homepage);
@@ -94,8 +92,5 @@ public class HomePageController {
         homePageService.deleteHomepage(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-
-
 
 }

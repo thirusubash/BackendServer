@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/employees")
-@CrossOrigin(origins = "https://localhost:8080", allowCredentials = "true")
 public class EmployeeController {
     private final EmployeeService employeeService;
 

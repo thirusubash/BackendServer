@@ -13,17 +13,15 @@ import org.springframework.data.domain.PageRequest;
 
 @RestController
 @RequestMapping("/api/companies")
-@CrossOrigin(origins = "https://localhost:8080", allowCredentials = "true")
 public class CompanyController {
     private final CompanyService companyService;
 
-private  final  CompanyTemplate companyTemplate;
+    private final CompanyTemplate companyTemplate;
+
     public CompanyController(CompanyService companyService, CompanyTemplate companyTemplate) {
         this.companyService = companyService;
         this.companyTemplate = companyTemplate;
     }
-
-
 
     // Get companies with pagination and search
     @GetMapping
@@ -42,7 +40,6 @@ private  final  CompanyTemplate companyTemplate;
 
         return ResponseEntity.ok(companies);
     }
-
 
     // Endpoint to get all employees of a company with pagination and search
     @GetMapping("/{companyId}/employees")
@@ -82,7 +79,7 @@ private  final  CompanyTemplate companyTemplate;
 
         return ResponseEntity.ok(plants);
     }
- 
+
     @GetMapping("/{companyId}/bank-details")
     public ResponseEntity<Page<BankDetails>> getCompanyBankdetails(
             @PathVariable Long companyId,
@@ -121,10 +118,6 @@ private  final  CompanyTemplate companyTemplate;
         return ResponseEntity.ok(companyAddresses);
     }
 
-
-
-
-
     @GetMapping("/{companyId}")
     public Company getCompanyById(@PathVariable Long companyId) {
         return companyService.getCompanyById(companyId);
@@ -153,7 +146,8 @@ private  final  CompanyTemplate companyTemplate;
     }
 
     @PutMapping("/{companyId}/employees/{employeeId}")
-    public Company updateEmployee(@PathVariable Long companyId, @PathVariable Long employeeId, @RequestBody Employee updatedEmployee) {
+    public Company updateEmployee(@PathVariable Long companyId, @PathVariable Long employeeId,
+            @RequestBody Employee updatedEmployee) {
         return companyService.updateOrCreateEmployee(companyId, updatedEmployee);
     }
 
@@ -170,7 +164,8 @@ private  final  CompanyTemplate companyTemplate;
     }
 
     @PutMapping("/{companyId}/plants/{plantId}")
-    public Company updatePlant(@PathVariable Long companyId, @PathVariable Long plantId, @RequestBody Plant updatedPlant) {
+    public Company updatePlant(@PathVariable Long companyId, @PathVariable Long plantId,
+            @RequestBody Plant updatedPlant) {
         return companyService.updateOrCreatePlant(companyId, updatedPlant);
     }
 
@@ -192,13 +187,14 @@ private  final  CompanyTemplate companyTemplate;
     }
 
     @PutMapping("/{companyId}/address/{addressId}")
-    public Company updateAddress(@PathVariable Long companyId, @PathVariable Long addressId, @RequestBody CompanyAddress address) {
+    public Company updateAddress(@PathVariable Long companyId, @PathVariable Long addressId,
+            @RequestBody CompanyAddress address) {
         return companyService.updateOrCreateCompanyAddress(companyId, address);
     }
 
     @DeleteMapping("/{companyId}/address/{addressId}")
     public String removeAddress(@PathVariable Long companyId, @PathVariable Long addressId) {
-        return companyService.removeAddress(companyId, addressId);  // Changed 'supplierId' to 'addressId'
+        return companyService.removeAddress(companyId, addressId); // Changed 'supplierId' to 'addressId'
     }
 
     @PatchMapping("/{companyId}/address/{addressId}/status")
@@ -233,42 +229,35 @@ private  final  CompanyTemplate companyTemplate;
         return companyService.updateBankDetailsStatus(companyId, bankId, status);
     }
 
-
     @PatchMapping("/{companyId}/status")
     public Boolean updateStatus(
             @PathVariable Long companyId,
             @RequestParam Boolean status) {
-        return companyService.updateStatus(companyId,  status);
+        return companyService.updateStatus(companyId, status);
     }
 
     @PostMapping("/{companyId}/bank-details")
     public String addOrUpdateBankDetails(@PathVariable Long companyId,
-                                         @RequestBody BankDetails bankDetails) {
+            @RequestBody BankDetails bankDetails) {
         return companyService.updateOrAddBankDetails(companyId, bankDetails);
     }
 
     @DeleteMapping("/{companyId}/bank-details/{bankDetailsId}")
     public String removeBankDetails(@PathVariable Long companyId,
-                                    @PathVariable Long bankDetailsId) {
+            @PathVariable Long bankDetailsId) {
         return companyService.removeBankDetails(companyId, bankDetailsId);
     }
 
     @PostMapping("/{companyId}/location")
     public String addLocation(@PathVariable Long companyId,
-                                         @RequestBody CompanyLocation location) {
+            @RequestBody CompanyLocation location) {
         return companyService.updateOrcreateLocation(companyId, location);
     }
 
     @DeleteMapping("/{companyId}/location/{locationId}")
     public String removeLocation(@PathVariable Long companyId,
-                                    @PathVariable Long locationId) {
+            @PathVariable Long locationId) {
         return companyService.removeLocation(companyId, locationId);
     }
-
-
-
-
-
-
 
 }

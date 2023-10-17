@@ -15,12 +15,10 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "https://localhost:8080", allowCredentials = "true")
 public class UserController {
 
     private final UserService userService;
     private final OtpService otpService;
-
 
     public UserController(UserService userService, OtpService otpService) {
         this.userService = userService;
@@ -104,7 +102,7 @@ public class UserController {
 
     @PutMapping("/change-number")
     public ResponseEntity<String> changenumber(@RequestParam Long id, @RequestParam String mobileno,
-                                               @RequestParam int otp) {
+            @RequestParam int otp) {
         try {
             boolean status = otpService.verifyMobileOtp(mobileno, otp);
             if (status) {
@@ -153,7 +151,8 @@ public class UserController {
     }
 
     @PatchMapping("/{id}/kyc-status/{kycInfoId}")
-    public User updateKycStatus(@PathVariable Long id, @PathVariable Long kycInfoId, @RequestBody Map<String, Boolean> request) throws Exception {
+    public User updateKycStatus(@PathVariable Long id, @PathVariable Long kycInfoId,
+            @RequestBody Map<String, Boolean> request) throws Exception {
         boolean status = request.get("status");
         return userService.updateKycStatus(id, kycInfoId, status);
     }
