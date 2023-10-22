@@ -14,7 +14,6 @@ import com.gksvp.web.util.AESEncryption;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,10 +32,10 @@ public class UserServiceImpl implements UserService {
     private final GroupService groupService;
     private final GroupRepository groupRepository;
 
-    @Autowired
-    public UserServiceImpl(ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRepository userRepository, AESEncryption aesEncryption,
-                           RoleRepository roleRepository, RoleService roleService,
-                           GroupRepository groupRepository, GroupService groupService) {
+    public UserServiceImpl(ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRepository userRepository,
+            AESEncryption aesEncryption,
+            RoleRepository roleRepository, RoleService roleService,
+            GroupRepository groupRepository, GroupService groupService) {
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
@@ -100,7 +99,6 @@ public class UserServiceImpl implements UserService {
             user.setFirstName(decrypt(user.getFirstName()));
             user.setUserName(decrypt(user.getUserName()));
 
-
             // Decrypt documentNumber in KycInfoList (if it exists)
             if (user.getKycInfoList() != null) {
                 List<UserKYCInfo> kycInfoList = user.getKycInfoList();
@@ -122,24 +120,30 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
-
     @Override
     @Transactional(readOnly = true)
     public UserDto getUserById(Long id) throws Exception {
-        User user = userRepository.findById(id).orElse(null);
-        if (user != null) {
-            processSensitiveUserData(user, false); // Decrypt sensitive user data
-        }
-        return modelMapper.map(user, UserDto.class); // Use 'user' as the source object
+        return userRepository.findById(id)
+                .map(user -> {
+                    try {
+                        processSensitiveUserData(user, false); // Decrypt sensitive user data
+                        return modelMapper.map(user, UserDto.class); // Use 'user' as the source object
+                    } catch (Exception e) {
+                        logger.error("Error processing user data for ID: {}", id, e);
+                        throw new RuntimeException("Error processing user data", e);
+                    }
+                })
+                .orElseThrow(() -> new UserNotFoundException("User with ID " + id + " not found."));
     }
-
 
     @Override
     public User createUser(User user) throws Exception {
-        if (isEmailTaken(user.getEmail())) throw new Exception("Email is already taken");
-        if (isMobileTaken(user.getMobileNo())) throw new Exception("Mobile number is already taken");
-        if (isUsernameTaken(user.getUserName())) throw new Exception("Username is already taken");
+        if (isEmailTaken(user.getEmail()))
+            throw new Exception("Email is already taken");
+        if (isMobileTaken(user.getMobileNo()))
+            throw new Exception("Mobile number is already taken");
+        if (isUsernameTaken(user.getUserName()))
+            throw new Exception("Username is already taken");
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         processSensitiveUserData(user, true); // Encrypt sensitive user data
@@ -157,7 +161,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-
     @Override
     @Transactional(readOnly = true)
     public List<UserDto> getAllUsers() throws Exception {
@@ -170,7 +173,6 @@ public class UserServiceImpl implements UserService {
                 .toList();
     }
 
-
     @Override
     public User updateUser(Long id, User user) throws Exception {
         processSensitiveUserData(user, true); // Encrypt sensitive user data
@@ -178,15 +180,15 @@ public class UserServiceImpl implements UserService {
         User existingUser = userRepository.findById(id).orElse(null);
         if (existingUser != null) {
             // Update user fields based on your requirements
-            if(!isEmailTaken(user.getEmail())){
+            if (!isEmailTaken(user.getEmail())) {
                 existingUser.setUserName(user.getUserName());
             }
-            if(!isUsernameTaken(user.getUserName())){
+            if (!isUsernameTaken(user.getUserName())) {
                 existingUser.setEmail(user.getEmail());
             }
-           if(!isMobileTaken((user.getMobileNo()))){
-               existingUser.setMobileNo(user.getMobileNo());
-           }
+            if (!isMobileTaken((user.getMobileNo()))) {
+                existingUser.setMobileNo(user.getMobileNo());
+            }
             existingUser.setFirstName(user.getFirstName());
             existingUser.setLastName(user.getLastName());
             existingUser.setDateOfBirth(user.getDateOfBirth());
@@ -207,7 +209,6 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
-
 
     @Override
     @Transactional(readOnly = true)
@@ -264,7 +265,6 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-
     @Override
     public Boolean updateEmail(Long userId, String email) throws Exception {
         User existingUser = userRepository.findById(userId).orElse(null);
@@ -290,7 +290,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.existsByUserName(encrypt(username));
     }
 
-
     @Override
     @Transactional
     public User addAddress(Long userId, Address address) throws Exception {
@@ -307,9 +306,6 @@ public class UserServiceImpl implements UserService {
         // Save the user with the new address mapping
         return userRepository.save(user);
     }
-
-
-
 
     @Override
     @Transactional
@@ -375,11 +371,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
-
-
-
-
     @Override
     public User removeGroupFromUser(Long id, List<Group> groups) throws Exception {
         User user = userRepository.findById(id).orElse(null);
@@ -419,9 +410,6 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-
-
-
     @Override
     @Transactional
     public User addKycInfo(Long userId, Set<UserKYCInfo> userKYCInfo) throws Exception {
@@ -450,8 +438,6 @@ public class UserServiceImpl implements UserService {
         return savedUser;
     }
 
-
-
     @Override
     @Transactional
     public User addLocation(Long id, GeoLocation location) throws Exception {
@@ -464,9 +450,6 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-
-
-
     @Override
     public User updateKycStatus(Long userId, Long kycInfoId, boolean status) throws Exception {
         User user = userRepository.findById(userId).orElse(null);
@@ -475,7 +458,7 @@ public class UserServiceImpl implements UserService {
             for (UserKYCInfo kycInfo : kycInfos) {
                 if (kycInfo.getId().equals(kycInfoId)) {
                     kycInfo.setStatus(status);
-                    processSensitiveUserData(user , false);
+                    processSensitiveUserData(user, false);
                     return userRepository.save(user);
                 }
             }

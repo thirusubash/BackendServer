@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,22 +27,18 @@ public class JwtAuthenticationController {
 
 	private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationController.class);
 
-
 	private final AuthenticationManager authenticationManager;
-
 
 	private final JwtTokenUtil jwtTokenUtil;
 
-
 	private final JwtUserDetailsService myUserDetailsService;
-
 
 	private final UserService userService;
 
-
 	private final AESEncryption aesEncryption;
 
-	public JwtAuthenticationController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil, JwtUserDetailsService myUserDetailsService, UserService userService, AESEncryption aesEncryption) {
+	public JwtAuthenticationController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil,
+			JwtUserDetailsService myUserDetailsService, UserService userService, AESEncryption aesEncryption) {
 		this.authenticationManager = authenticationManager;
 		this.jwtTokenUtil = jwtTokenUtil;
 		this.myUserDetailsService = myUserDetailsService;
@@ -50,7 +47,6 @@ public class JwtAuthenticationController {
 	}
 
 	@PostMapping(value = "/authenticate")
-	@CrossOrigin(origins = "https://localhost:8080", allowCredentials = "true")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 		String username;
 		switch (getUsernameType(authenticationRequest.getUsername())) {
@@ -60,7 +56,8 @@ public class JwtAuthenticationController {
 					username = mobileUser.getUserName();
 					logger.info("Authenticated with mobile number: {}", authenticationRequest.getUsername());
 				} else {
-					throw new UsernameNotFoundException("Mobile number not found: " + authenticationRequest.getUsername());
+					throw new UsernameNotFoundException(
+							"Mobile number not found: " + authenticationRequest.getUsername());
 				}
 			}
 			case EMAIL -> {
@@ -84,10 +81,8 @@ public class JwtAuthenticationController {
 		authenticate(username, authenticationRequest.getPassword());
 		final UserDetails userDetails = myUserDetailsService.loadUserByUsername(username);
 		final String token = jwtTokenUtil.generateToken(userDetails);
-
 		return ResponseEntity.ok(new JwtResponse(token));
 	}
-
 
 	private enum UsernameType {
 		MOBILE_NUMBER, EMAIL, OTHER
@@ -103,9 +98,7 @@ public class JwtAuthenticationController {
 		}
 	}
 
-
-
-	private void authenticate( String username, String password) throws Exception {
+	private void authenticate(String username, String password) throws Exception {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException e) {
@@ -115,9 +108,7 @@ public class JwtAuthenticationController {
 		}
 	}
 
-
 	@PostMapping("/register")
-	@CrossOrigin(origins = "https://localhost:8080", allowCredentials = "true")
 	public ResponseEntity<?> registerUser(@RequestBody User user) {
 		try {
 			if (userService.isEmailTaken(user.getEmail())) {
@@ -141,7 +132,9 @@ public class JwtAuthenticationController {
 		}
 	}
 
-
-
+	@ExceptionHandler(UsernameNotFoundException.class)
+	public ResponseEntity<?> handleUsernameNotFoundException(UsernameNotFoundException e) {
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+	}
 
 }

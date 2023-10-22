@@ -6,7 +6,6 @@ import com.gksvp.web.user.entity.User;
 import com.gksvp.web.user.repository.RoleRepository;
 import com.gksvp.web.user.repository.UserRepository;
 import com.gksvp.web.user.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,35 +14,24 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import javax.management.relation.RoleNotFoundException;
+
 @Service
 public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
 
-    @Autowired
     public RoleServiceImpl(RoleRepository roleRepository, UserRepository userRepository) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
     }
-
-
-
-
-    private RoleDto convertToDto(Role role) {
-        RoleDto roleDto = new RoleDto();
-        roleDto.setId(role.getId());
-        roleDto.setName(role.getName());
-        // Set other properties as needed
-        return roleDto;
-}
 
     @Override
     @Transactional(readOnly = true)
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }
-
 
     @Override
     @Transactional(readOnly = true)
@@ -57,22 +45,9 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.findByName(name).orElse(null);
     }
 
-
     @Override
     public Role createRole(Role role) {
         return roleRepository.save(role);
-    }
-
-    @Override
-    public Role updateRole(Long id, Role updatedRole) {
-        Optional<Role> existingRole = roleRepository.findById(id);
-        if (existingRole.isPresent()) {
-            Role roleToUpdate = existingRole.get();
-            roleToUpdate.setName(updatedRole.getName());
-            roleToUpdate.setDescription(updatedRole.getDescription());
-            return roleRepository.save(roleToUpdate);
-        }
-        return null;
     }
 
     @Override
@@ -123,7 +98,6 @@ public class RoleServiceImpl implements RoleService {
         return null; // Return null if the role is not found.
     }
 
-
     @Override
     public List<User> removeUsersFromRole(Long roleId, List<Long> userIds) {
         // Find the role by ID
@@ -160,6 +134,18 @@ public class RoleServiceImpl implements RoleService {
         }
 
         return Collections.emptyList(); // Return an empty list if the role is not found.
+    }
+
+    @Override
+    @Transactional
+    public Role updateRole(Long id, Role updatedRole) throws RoleNotFoundException {
+        return roleRepository.findById(id)
+                .map(existingRole -> {
+                    existingRole.setName(updatedRole.getName());
+                    existingRole.setDescription(updatedRole.getDescription());
+                    return roleRepository.save(existingRole);
+                })
+                .orElseThrow(() -> new RoleNotFoundException("Role with ID " + id + " not found."));
     }
 
 }

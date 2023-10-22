@@ -19,7 +19,9 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((auth) -> auth
-//                        .requestMatchers("/users").hasAuthority("user")
+                        // Uncomment and tailor the line below if you have specific URL-role
+                        // requirements.
+                        // .requestMatchers("/users").hasAuthority("user")
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults());
         return http.build();
@@ -33,12 +35,14 @@ public class SecurityConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+        // Using BCrypt algorithm to hash the passwords
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/register", "/authenticate", "/roles", "/groups","/**" );
+        // Ignoring security checks for some specific paths
+        return (web) -> web.ignoring().requestMatchers("/register", "/authenticate");
     }
 
 }

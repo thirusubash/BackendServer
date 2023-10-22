@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  web-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      SERVER_PORT: 8443
+    ports:
+      - "8443:8443"
+    volumes:
+      - certs:/etc/letsencrypt:ro # Read-only mount for certificates
+    depends_on:
+      - mysql
+      - certbot # Ensure certbot runs first to get the certificates
+    command: ["./wait-for", "certbot", "--", "your-existing-start-command"] # Wait for certbot before starting web-app
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: always
+  
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - certs:/etc/letsencrypt
+    environment:
+      - CERTBOT_EMAIL=${CERTBOT_EMAIL}
+      - DOMAIN=${DOMAIN}
+    ports:
+      - "80:80"
+      - "443:443"
+    command: sh -c "trap exit TERM; certbot renew --force-renewal --standalone --agree-tos --email ${CERTBOT_EMAIL} && sleep infinity"
+
+volumes:
+  mysql-data:
+  certs:

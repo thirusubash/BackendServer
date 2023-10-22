@@ -5,6 +5,8 @@ import com.gksvp.web.user.entity.User;
 
 import java.util.List;
 
+import javax.management.relation.RoleNotFoundException;
+
 public interface RoleService {
     List<Role> getAllRoles();
 
@@ -14,7 +16,7 @@ public interface RoleService {
 
     Role createRole(Role role);
 
-    Role updateRole(Long id, Role updatedRole);
+    public Role updateRole(Long id, Role updatedRole) throws RoleNotFoundException;
 
     void deleteRole(Long id);
 

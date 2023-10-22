@@ -1,10 +1,9 @@
-# Build stage using a specified maven image
+# First stage: Build the Spring Boot application
 FROM maven AS builder
 
-# Metadata as a label
 LABEL maintainer="thiru"
 
-# Keeping the system up-to-date and cleaning up
+# Update system and clean up
 RUN apt-get update \
    && apt-get install -y apt-utils \
    && apt-get clean \
@@ -15,30 +14,28 @@ COPY pom.xml .
 COPY src ./src
 
 # Package the application
-RUN mvn clean package -DskipTests -X
+RUN mvn clean package -DskipTests
 
-# Display contents of target directory for debugging
+# Display contents of the target directory for debugging
 RUN ls -la target/
 
-# Run stage using OpenJDK JRE base image
+# Second stage: Run the Spring Boot application using OpenJDK JRE
 FROM eclipse-temurin:17-jre
 
-# Install Certbot and cron
-RUN apt-get update && apt-get install -y certbot cron
+# Update system and clean up (not required if you're not installing additional software)
+RUN apt-get update \
+   && apt-get install -y apt-utils \
+   && apt-get clean \
+   && rm -rf /var/lib/apt/lists/*
 
-# Expose the port the app runs on
-EXPOSE 443
-
-# Copy the packaged jar file from the builder stage into our production container
+# Copy the JAR file from the builder stage
 COPY --from=builder /target/web-0.0.1-SNAPSHOT.jar /web-0.0.1-SNAPSHOT.jar
 
-# Set up a cron job to renew the certificate
-RUN echo "0 */12 * * * root certbot renew --quiet --deploy-hook 'touch /etc/letsencrypt/renewal-triggered'" >> /etc/crontab
+# Expose the port the app runs on (8081 in this case)
+EXPOSE 8081
 
-# Single CMD instruction combining cron startup and Spring Boot application
-CMD cron && \
-   while true; do \
-   java -Dserver.port=443 -Dserver.ssl.key-store=/etc/letsencrypt/live/gksvp.com/keystore.jks -Dserver.ssl.key-store-password=Pa$$w0rd@gk -Dserver.ssl.key-store-type=JKS -jar /web-0.0.1-SNAPSHOT.jar; \
-   while [ ! -f /etc/letsencrypt/renewal-triggered ]; do sleep 5; done; \
-   rm /etc/letsencrypt/renewal-triggered; \
-   done
+# Set the working directory for the application
+WORKDIR /
+
+# Run the application
+CMD ["java", "-jar", "/web-0.0.1-SNAPSHOT.jar"]

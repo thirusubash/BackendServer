@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import javax.management.relation.RoleNotFoundException;
+
 @RestController
 @RequestMapping("/roles")
 public class RoleController {
@@ -35,15 +37,12 @@ public class RoleController {
         return roleDto;
     }
 
-
-
     @GetMapping("/{id}")
     public ResponseEntity<RoleDto> getRoleById(@PathVariable Long id) {
         Role role = roleService.getRoleById(id);
-       RoleDto roleDto= convertToDto(role);
+        RoleDto roleDto = convertToDto(role);
         return ResponseEntity.ok(roleDto);
     }
-
 
     @PostMapping
     public Role createRole(@RequestBody Role role) {
@@ -51,7 +50,7 @@ public class RoleController {
     }
 
     @PutMapping("/{id}")
-    public Role updateRole(@PathVariable Long id, @RequestBody Role updatedRole) {
+    public Role updateRole(@PathVariable Long id, @RequestBody Role updatedRole) throws RoleNotFoundException {
         return roleService.updateRole(id, updatedRole);
     }
 
@@ -77,5 +76,3 @@ public class RoleController {
     }
 
 }
-
-

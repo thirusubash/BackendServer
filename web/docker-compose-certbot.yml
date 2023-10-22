@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - certs:/etc/letsencrypt
+      - /var/lib/letsencrypt:/var/lib/letsencrypt
+    environment:
+      - CERTBOT_EMAIL=${CERTBOT_EMAIL}
+      - DOMAIN=${DOMAIN}
+    ports:
+      - "80:80"
+      - "443:443"
+    command:
+      - "/bin/sh"
+      - "-c"
+      - "certbot renew --force-renewal --standalone --agree-tos --email ${CERTBOT_EMAIL} && sleep 7d"
+  
+  web-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - certs:/etc/letsencrypt
+    # ... other configurations for your Spring Boot service
+
+volumes:
+  certs:
